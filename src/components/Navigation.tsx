@@ -74,12 +74,6 @@ const Navigation = () => {
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-6">
             <Link 
-              to="/login" 
-              className={`text-base font-medium transition-colors duration-200 ${textColor} hover:text-primary`}
-            >
-              Login
-            </Link>
-            <Link 
               to="/apply" 
               className="btn btn-primary h-12 px-6 text-base inline-flex items-center gap-2"
             >
@@ -105,7 +99,7 @@ const Navigation = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 top-20 z-40 bg-primary">
+        <div className="lg:hidden fixed inset-0 top-full z-40 bg-primary">
           <div className="flex flex-col items-center justify-center h-full gap-8 px-4">
             {navLinks.map((link) => (
               <Link
@@ -117,13 +111,6 @@ const Navigation = () => {
                 {link.name}
               </Link>
             ))}
-            <Link 
-              to="/login" 
-              className="text-white text-2xl font-medium hover:text-primary-light-tint transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Login
-            </Link>
             <Link 
               to="/apply" 
               className="btn btn-primary w-full max-w-sm bg-white text-primary hover:bg-white/90 text-lg"
