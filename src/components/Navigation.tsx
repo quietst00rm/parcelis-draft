@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronRight } from "lucide-react";
 import logo from "@/assets/logo.png";
 
 const Navigation = () => {
@@ -51,9 +51,9 @@ const Navigation = () => {
     : "text-white";
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${headerBg} backdrop-blur-md`}>
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${headerBg}`} style={{ backdropFilter: 'blur(12px)' }}>
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-20 lg:h-[72px]">
           <Link to="/" className="flex items-center">
             <img src={logo} alt="PARCELIS" className="h-10 w-auto" />
           </Link>
@@ -64,7 +64,7 @@ const Navigation = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-base font-medium transition-colors duration-200 ${textColor} hover:text-primary`}
+                className={`text-base font-medium transition-colors duration-200 relative ${textColor} hover:text-primary nav-link-animated`}
               >
                 {link.name}
               </Link>
@@ -81,9 +81,10 @@ const Navigation = () => {
             </Link>
             <Link 
               to="/apply" 
-              className="btn btn-primary btn-header px-6 py-3 text-base"
+              className="btn btn-primary h-12 px-6 text-base inline-flex items-center gap-2"
             >
               Apply Now
+              <ChevronRight size={16} />
             </Link>
           </div>
 

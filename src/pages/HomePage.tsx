@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Shield, DollarSign, Clock, TrendingUp, Users, Award, ChevronRight, Code } from "lucide-react";
+import { Shield, DollarSign, Clock, TrendingUp, Users, Award, ChevronRight, Code, Package } from "lucide-react";
+import { useCounter } from "@/hooks/use-counter";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
+import { GlassmorphicCard } from "@/components/ui/glassmorphic-card";
 import uspsLogo from "@/assets/carriers/usps.png";
 import dhlLogo from "@/assets/carriers/dhl.png";
 import upsLogo from "@/assets/carriers/ups.png";
@@ -14,6 +17,12 @@ const HomePage = () => {
   const [profitValue, setProfitValue] = useState(150);
   const [customerPrice, setCustomerPrice] = useState(4.99);
   const [volume, setVolume] = useState(100);
+  const [statsVisible, setStatsVisible] = useState(false);
+
+  // Animated counters for stats
+  const packagesCount = useCounter(statsVisible ? 50000 : 0, 2000);
+  const merchantsCount = useCounter(statsVisible ? 10000 : 0, 2000);
+  const satisfactionCount = useCounter(statsVisible ? 99 : 0, 2000);
 
   // Pricing calculation logic
   const calculateBaseCost = (value: number) => {
@@ -59,7 +68,7 @@ const HomePage = () => {
 
     // Intersection Observer for scroll animations
     const observerOptions = {
-      threshold: 0.2,
+      threshold: 0.15,
       rootMargin: '0px 0px -100px 0px'
     };
 
@@ -67,12 +76,16 @@ const HomePage = () => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
+          // Trigger stats animation
+          if (entry.target.classList.contains('stats-bar')) {
+            setStatsVisible(true);
+          }
         }
       });
     }, observerOptions);
 
     // Observe all fade-in elements
-    document.querySelectorAll('.fade-in-up').forEach(el => {
+    document.querySelectorAll('.fade-in-up, .stats-bar').forEach(el => {
       animateOnScroll.observe(el);
     });
 
@@ -85,7 +98,10 @@ const HomePage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-br from-[#1e2099] via-[#2533a8] to-[#2a2fb5] text-white overflow-hidden flex items-center">
+      <section id="main-content" className="relative min-h-screen bg-gradient-to-br from-[#1e2099] via-[#2533a8] to-[#2a2fb5] text-white overflow-hidden flex items-center">
+        {/* Animated Background */}
+        <AnimatedBackground />
+        
         {/* Grid Pattern Overlay */}
         <div 
           className="absolute inset-0 opacity-10 pointer-events-none" 
@@ -107,33 +123,33 @@ const HomePage = () => {
         
         <div className="container mx-auto px-6 lg:px-12 relative z-10 py-20">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Trust Badge */}
-            <div className="inline-flex items-center gap-3 px-5 py-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-8">
-              <Shield className="text-green-400" size={20} />
-              <span className="text-white text-sm font-medium uppercase tracking-wider">Licensed Reinsurance Provider</span>
+            {/* Trust Badge with Hartford */}
+            <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/15 backdrop-blur-md rounded-full border border-white/30 mb-8 shadow-lg">
+              <Shield className="text-green-400" size={24} />
+              <span className="text-white text-sm font-semibold">Underwritten by The Hartford</span>
             </div>
             
             {/* Hero Headline */}
-            <h1 className="mb-6">
-              <span className="block text-3xl md:text-5xl font-medium text-white/90 mb-2">
+            <h1 className="mb-6 hero-content-fade">
+              <span className="block text-3xl md:text-5xl lg:text-6xl font-medium text-white/90 mb-3">
                 Turn Package Protection
               </span>
-              <span className="block display-1 text-white font-bold">
+              <span className="block text-5xl md:text-7xl lg:text-[96px] text-white font-bold leading-none tracking-tight hero-headline-bottom">
                 INTO PROFIT
               </span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-white/90 mb-14 max-w-2xl mx-auto leading-relaxed font-medium">
               Zero hassle. Real insurance. Better margins.
             </p>
             
             {/* Hero CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center mb-12">
-              <a href="#calculator" className="btn btn-primary btn-large inline-flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row gap-5 items-center justify-center mb-12">
+              <a href="#calculator" className="btn btn-primary btn-large inline-flex items-center gap-2 shadow-2xl">
                 Calculate Your Profit
                 <ChevronRight size={20} />
               </a>
-              <Link to="/apply" className="btn btn-secondary btn-large">
+              <Link to="/apply" className="btn btn-secondary btn-large text-white border-2 border-white hover:bg-white hover:text-primary transition-all">
                 Apply Now
               </Link>
             </div>
@@ -148,20 +164,29 @@ const HomePage = () => {
       </section>
 
       {/* Stats Bar */}
-      <section className="bg-primary-dark text-white py-16">
+      <section className="stats-bar bg-primary-dark text-white py-16 border-t-4 border-cyan-400">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
-            <div className="text-center">
-              <div className="text-5xl md:text-6xl font-bold mb-2" style={{ color: 'hsl(180 100% 45%)' }}>$50M+</div>
-              <div className="text-lg text-white/80">Packages Protected</div>
+            <div className="text-center fade-in-up">
+              <Shield className="w-12 h-12 mx-auto mb-4 text-cyan-400" />
+              <div className="text-5xl md:text-6xl font-bold mb-2 text-cyan-400">
+                ${(packagesCount / 1000).toFixed(0)}M+
+              </div>
+              <div className="text-lg text-white/80 font-medium">Packages Protected</div>
             </div>
-            <div className="text-center">
-              <div className="text-5xl md:text-6xl font-bold mb-2" style={{ color: 'hsl(180 100% 45%)' }}>10K+</div>
-              <div className="text-lg text-white/80">Active Merchants</div>
+            <div className="text-center fade-in-up">
+              <Users className="w-12 h-12 mx-auto mb-4 text-cyan-400" />
+              <div className="text-5xl md:text-6xl font-bold mb-2 text-cyan-400">
+                {(merchantsCount / 1000).toFixed(0)}K+
+              </div>
+              <div className="text-lg text-white/80 font-medium">Active Merchants</div>
             </div>
-            <div className="text-center">
-              <div className="text-5xl md:text-6xl font-bold mb-2" style={{ color: 'hsl(180 100% 45%)' }}>99%</div>
-              <div className="text-lg text-white/80">Satisfaction Rate</div>
+            <div className="text-center fade-in-up">
+              <Award className="w-12 h-12 mx-auto mb-4 text-cyan-400" />
+              <div className="text-5xl md:text-6xl font-bold mb-2 text-cyan-400">
+                {satisfactionCount}%
+              </div>
+              <div className="text-lg text-white/80 font-medium">Satisfaction Rate</div>
             </div>
           </div>
         </div>
@@ -361,7 +386,8 @@ const HomePage = () => {
               {activeTab === 'profit' && (
                 <div className="space-y-8 animate-fade-in">
                   <div>
-                    <label className="block text-sm font-semibold uppercase tracking-wider mb-3" style={{ color: 'hsl(227 33% 16%)' }}>
+                    <label className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider mb-3" style={{ color: 'hsl(227 33% 16%)' }}>
+                      <Package size={16} className="text-primary" />
                       Package Value
                     </label>
                     <div className="relative mb-4">
@@ -370,14 +396,15 @@ const HomePage = () => {
                         type="number"
                         value={profitValue}
                         onChange={(e) => setProfitValue(Number(e.target.value))}
-                        className="w-full pl-12 pr-6 py-4 text-3xl font-semibold border-2 rounded-lg transition-all duration-200 focus:outline-none"
+                        className="w-full pl-12 pr-6 py-4 text-3xl font-semibold border-2 rounded-lg transition-all duration-200 focus:outline-none calc-input backdrop-blur-sm"
                         style={{ 
                           borderColor: 'hsl(214 15% 66%)',
-                          color: 'hsl(227 33% 16%)'
+                          color: 'hsl(227 33% 16%)',
+                          background: 'rgba(255, 255, 255, 0.7)'
                         }}
                         onFocus={(e) => {
                           e.target.style.borderColor = 'hsl(238 69% 36%)';
-                          e.target.style.boxShadow = '0 0 0 3px hsla(238 69% 36% / 0.1)';
+                          e.target.style.boxShadow = '0 0 0 3px hsla(238 69% 36% / 0.15)';
                         }}
                         onBlur={(e) => {
                           e.target.style.borderColor = 'hsl(214 15% 66%)';
@@ -392,7 +419,7 @@ const HomePage = () => {
                       step="10"
                       value={profitValue}
                       onChange={(e) => setProfitValue(Number(e.target.value))}
-                      className="w-full h-2 rounded-full appearance-none cursor-pointer mb-2"
+                      className="w-full h-2 rounded-full appearance-none cursor-pointer calc-slider mb-2"
                       style={{ background: 'hsl(214 15% 66%)' }}
                     />
                     <div className="text-sm" style={{ color: 'hsl(215 16% 47%)' }}>
@@ -403,7 +430,8 @@ const HomePage = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-semibold uppercase tracking-wider mb-3" style={{ color: 'hsl(227 33% 16%)' }}>
+                    <label className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider mb-3" style={{ color: 'hsl(227 33% 16%)' }}>
+                      <DollarSign size={16} className="text-primary" />
                       Your Customer Price
                     </label>
                     <div className="relative mb-4">
@@ -413,14 +441,15 @@ const HomePage = () => {
                         step="0.01"
                         value={customerPrice}
                         onChange={(e) => setCustomerPrice(Number(e.target.value))}
-                        className="w-full pl-12 pr-6 py-4 text-3xl font-semibold border-2 rounded-lg transition-all duration-200 focus:outline-none"
+                        className="w-full pl-12 pr-6 py-4 text-3xl font-semibold border-2 rounded-lg transition-all duration-200 focus:outline-none calc-input backdrop-blur-sm"
                         style={{ 
                           borderColor: 'hsl(214 15% 66%)',
-                          color: 'hsl(227 33% 16%)'
+                          color: 'hsl(227 33% 16%)',
+                          background: 'rgba(255, 255, 255, 0.7)'
                         }}
                         onFocus={(e) => {
                           e.target.style.borderColor = 'hsl(238 69% 36%)';
-                          e.target.style.boxShadow = '0 0 0 3px hsla(238 69% 36% / 0.1)';
+                          e.target.style.boxShadow = '0 0 0 3px hsla(238 69% 36% / 0.15)';
                         }}
                         onBlur={(e) => {
                           e.target.style.borderColor = 'hsl(214 15% 66%)';
@@ -435,12 +464,12 @@ const HomePage = () => {
                       step="0.50"
                       value={customerPrice}
                       onChange={(e) => setCustomerPrice(Number(e.target.value))}
-                      className="w-full h-2 rounded-full appearance-none cursor-pointer"
+                      className="w-full h-2 rounded-full appearance-none cursor-pointer calc-slider"
                       style={{ background: 'hsl(214 15% 66%)' }}
                     />
                   </div>
                   
-                  <div className="bg-white rounded-xl p-8 border-2 shadow-md" style={{ borderColor: 'hsl(163 100% 43%)' }}>
+                  <div className="bg-white/70 backdrop-blur-md rounded-xl p-8 border-2 shadow-lg" style={{ borderColor: 'hsl(163 100% 43%)', boxShadow: '0 8px 24px hsla(163 100% 43% / 0.2)' }}>
                     <div className="space-y-3 mb-6">
                       <div className="flex justify-between text-lg">
                         <span>Customer Pays:</span>
@@ -453,7 +482,7 @@ const HomePage = () => {
                       <div className="h-0.5" style={{ background: 'hsl(214 15% 66%)' }} />
                       <div className="flex justify-between text-xl font-bold">
                         <span>Your Profit:</span>
-                        <span className="text-3xl" style={{ color: 'hsl(163 100% 43%)' }}>{formatCurrency(profit)}</span>
+                        <span className="text-3xl result-value" style={{ color: 'hsl(163 100% 43%)' }}>{formatCurrency(profit)}</span>
                       </div>
                     </div>
                     
@@ -480,16 +509,16 @@ const HomePage = () => {
                       </div>
                     </div>
                     
-                    <div className="flex flex-wrap items-center gap-2 text-base" style={{ color: 'hsl(215 16% 47%)' }}>
-                      <span>At</span>
-                      <input
+                    <div className="flex items-center gap-2 text-base flex-wrap" style={{ color: 'hsl(215 16% 47%)' }}>
+                      At 
+                      <input 
                         type="number"
                         value={volume}
                         onChange={(e) => setVolume(Number(e.target.value))}
-                        className="w-20 px-2 py-1 text-center font-semibold border rounded"
+                        className="w-20 px-2 py-1 text-base font-semibold text-center border rounded volume-input"
                         style={{ borderColor: 'hsl(214 15% 66%)' }}
                       />
-                      <span>packages/month:</span>
+                      packages/month:
                       <strong className="text-2xl" style={{ color: 'hsl(163 100% 43%)' }}>
                         {formatCurrency(annualProfit)}/year
                       </strong>
@@ -497,11 +526,12 @@ const HomePage = () => {
                   </div>
                 </div>
               )}
-            </div>
+            </GlassmorphicCard>
             
-            <div className="mt-12 text-center">
-              <Link to="/apply" className="btn btn-primary btn-large">
+            <div className="text-center mt-12">
+              <Link to="/apply" className="btn btn-primary btn-large inline-flex items-center gap-2">
                 Start Earning with PARCELIS
+                <ChevronRight size={20} />
               </Link>
             </div>
           </div>
