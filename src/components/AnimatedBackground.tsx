@@ -3,7 +3,7 @@ export const AnimatedBackground = () => {
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {/* Animated geometric shapes */}
       <svg
-        className="absolute top-20 right-10 w-32 h-32 opacity-10 animate-float-1"
+        className="absolute top-20 right-10 w-32 h-32 opacity-20 animate-float-1"
         viewBox="0 0 100 100"
         fill="none"
       >
@@ -11,7 +11,7 @@ export const AnimatedBackground = () => {
       </svg>
       
       <svg
-        className="absolute top-1/3 left-10 w-24 h-24 opacity-10 animate-float-2"
+        className="absolute top-1/3 left-10 w-24 h-24 opacity-20 animate-float-2"
         viewBox="0 0 100 100"
         fill="none"
       >
@@ -19,7 +19,7 @@ export const AnimatedBackground = () => {
       </svg>
       
       <svg
-        className="absolute bottom-1/4 right-1/4 w-28 h-28 opacity-10 animate-float-3"
+        className="absolute bottom-1/4 right-1/4 w-28 h-28 opacity-20 animate-float-3"
         viewBox="0 0 100 100"
         fill="none"
       >
@@ -28,7 +28,7 @@ export const AnimatedBackground = () => {
 
       {/* Flowing lines */}
       <svg
-        className="absolute top-0 left-0 w-full h-full opacity-[0.05]"
+        className="absolute top-0 left-0 w-full h-full opacity-[0.08]"
         viewBox="0 0 1200 800"
         fill="none"
         preserveAspectRatio="none"

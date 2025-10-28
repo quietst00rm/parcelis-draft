@@ -40,15 +40,15 @@ const Navigation = () => {
 
   const headerBg = scrolled || !isHomePage 
     ? "bg-white/95 shadow-sm" 
-    : "bg-transparent";
+    : "bg-white/90 shadow-md";
   
   const textColor = scrolled || !isHomePage 
     ? "text-foreground" 
-    : "text-white";
+    : "text-foreground";
   
   const menuIconColor = scrolled || !isHomePage 
     ? "text-foreground" 
-    : "text-white";
+    : "text-foreground";
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${headerBg}`} style={{ backdropFilter: 'blur(12px)' }}>
