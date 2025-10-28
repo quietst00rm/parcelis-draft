@@ -40,34 +40,32 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Base Colors - Dark Theme */
-    --background: 0 0% 8%;
-    --background-alt: 0 0% 12%;
-    --foreground: 0 0% 100%;
+    /* Base Colors */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 10%;
 
-    --card: 0 0% 12%;
-    --card-foreground: 0 0% 100%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
 
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 100%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
 
-    /* Cyan Accent System */
-    --primary: 180 100% 45%;
-    --primary-hover: 180 100% 55%;
-    --primary-foreground: 0 0% 8%;
-    --primary-light-tint: 180 100% 35%;
-    --primary-medium: 180 100% 50%;
-    --primary-dark: 180 80% 35%;
-    --primary-glow: 180 100% 60%;
+    /* Royal Blue Scale */
+    --primary: 240 71% 35%;
+    --primary-hover: 240 71% 30%;
+    --primary-foreground: 0 0% 100%;
+    --primary-light-tint: 240 75% 95%;
+    --primary-medium: 240 64% 58%;
+    --primary-dark: 240 69% 25%;
 
-    --secondary: 0 0% 16%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 240 20% 96%;
+    --secondary-foreground: 240 71% 35%;
 
-    --muted: 0 0% 18%;
-    --muted-foreground: 0 0% 70%;
+    --muted: 220 13% 95%;
+    --muted-foreground: 220 9% 46%;
 
-    --accent: 180 100% 45%;
-    --accent-foreground: 0 0% 8%;
+    --accent: 240 20% 96%;
+    --accent-foreground: 240 71% 35%;
 
     /* Semantic Colors */
     --success: 142 71% 45%;
@@ -79,16 +77,16 @@ All colors MUST be HSL.
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
 
-    /* Neutral Gray Scale - Dark Mode */
-    --text-primary: 0 0% 100%;
-    --text-secondary: 0 0% 75%;
+    /* Neutral Gray Scale */
+    --text-primary: 0 0% 10%;
+    --text-secondary: 0 0% 40%;
     --text-tertiary: 0 0% 60%;
-    --border-gray: 0 0% 20%;
-    --background-gray: 0 0% 10%;
+    --border-gray: 0 0% 90%;
+    --background-gray: 210 17% 98%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 18%;
-    --ring: 180 100% 45%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 240 71% 35%;
 
     /* Design Tokens */
     --radius: 0.5rem;
