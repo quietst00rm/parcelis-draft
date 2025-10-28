@@ -1,6 +1,6 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Shield, DollarSign, Clock, Globe, ChevronRight } from "lucide-react";
+import { Shield, DollarSign, Clock, TrendingUp, Users, Award, ChevronRight, Code } from "lucide-react";
 import uspsLogo from "@/assets/carriers/usps.png";
 import dhlLogo from "@/assets/carriers/dhl.png";
 import upsLogo from "@/assets/carriers/ups.png";
@@ -9,16 +9,66 @@ import shopifyLogo from "@/assets/platforms/shopify.png";
 import twentyNineNextLogo from "@/assets/platforms/29next.png";
 
 const HomePage = () => {
+  const [activeTab, setActiveTab] = useState<'basic' | 'profit'>('basic');
+  const [basicValue, setBasicValue] = useState(150);
+  const [profitValue, setProfitValue] = useState(150);
+  const [customerPrice, setCustomerPrice] = useState(4.99);
+  const [volume, setVolume] = useState(100);
+
+  // Pricing calculation logic
+  const calculateBaseCost = (value: number) => {
+    if (value <= 49) return { cost: 0, description: "Below minimum coverage" };
+    if (value <= 200) return { cost: 2.50, description: "For packages valued $50-$200" };
+    if (value <= 400) return { cost: 5.00, description: "For packages valued $201-$400" };
+    if (value <= 600) return { cost: 7.50, description: "For packages valued $401-$600" };
+    if (value <= 800) return { cost: 10.00, description: "For packages valued $601-$800" };
+    return { cost: null, description: "Contact us for custom quote" };
+  };
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(amount);
+  };
+
+  const basicTier = calculateBaseCost(basicValue);
+  const profitTier = calculateBaseCost(profitValue);
+  const profit = Math.max(0, customerPrice - (profitTier.cost || 0));
+  const annualProfit = profit * volume * 12;
+  const costPercent = customerPrice > 0 ? ((profitTier.cost || 0) / customerPrice) * 100 : 50;
+  const profitPercent = customerPrice > 0 ? (profit / customerPrice) * 100 : 50;
+
+  // Smooth scroll function
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLAnchorElement;
+      if (target.tagName === 'A' && target.getAttribute('href')?.startsWith('#')) {
+        e.preventDefault();
+        const id = target.getAttribute('href')?.slice(1);
+        const element = document.getElementById(id || '');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    };
+
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, []);
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-[85vh] bg-gradient-to-br from-[#1e2099] to-[#2a2fb5] text-white overflow-hidden flex items-center">
-        {/* Dot Pattern Overlay */}
+      <section className="relative min-h-screen bg-gradient-to-br from-[#1e2099] via-[#2533a8] to-[#2a2fb5] text-white overflow-hidden flex items-center">
+        {/* Grid Pattern Overlay */}
         <div 
-          className="absolute inset-0 opacity-50 pointer-events-none" 
+          className="absolute inset-0 opacity-10 pointer-events-none" 
           style={{
-            backgroundImage: 'radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px)',
-            backgroundSize: '30px 30px'
+            backgroundImage: 'linear-gradient(hsl(var(--color-white) / 0.05) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--color-white) / 0.05) 1px, transparent 1px)',
+            backgroundSize: '50px 50px'
           }}
           aria-hidden="true" 
         />
@@ -27,300 +77,606 @@ const HomePage = () => {
         <div 
           className="absolute inset-0 pointer-events-none"
           style={{
-            backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%)'
+            backgroundImage: 'radial-gradient(ellipse at 30% 50%, hsla(238 63% 58% / 0.3) 0%, transparent 50%)'
           }}
           aria-hidden="true"
         />
         
-        <div className="container mx-auto px-4 md:px-10 relative z-10 py-12 md:py-20">
-          <div className="grid md:grid-cols-2 gap-12 md:gap-20 items-center max-w-7xl mx-auto">
-            
-            {/* Left Column - Text Content */}
-            <div className="text-center md:text-left animate-fade-in">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.1] mb-6 tracking-tight">
-                Turn Package<br />
-                Protection Into<br />
-                <span className="text-white">Profit</span>
-              </h1>
-              
-              <p className="text-lg md:text-xl text-white/90 mb-8 max-w-[550px] mx-auto md:mx-0 leading-relaxed">
-                PARCELIS gives your customers comprehensive shipping insurance while putting money back in your pocket. No claims hassles. No overhead. Just better margins.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 items-center md:items-start mb-8">
-                <Button 
-                  asChild 
-                  size="lg" 
-                  className="h-14 px-8 text-base font-semibold bg-white text-[#1e2099] hover:bg-white/90 shadow-[0_4px_24px_rgba(0,0,0,0.15)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.2)] hover:-translate-y-0.5 transition-all duration-300"
-                >
-                  <Link to="/apply">Get Started</Link>
-                </Button>
-                
-                <Link 
-                  to="/how-it-works" 
-                  className="text-white font-semibold text-base inline-flex items-center gap-2 hover:gap-3 transition-all duration-300"
-                >
-                  Learn more
-                  <ChevronRight size={20} />
-                </Link>
-              </div>
-
-              {/* Trust Badge - Licensed Provider */}
-              <div className="inline-flex items-center gap-3 mt-4 px-5 py-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-                <Shield className="text-green-400" size={20} />
-                <span className="text-white text-sm font-medium">Licensed Reinsurance Provider</span>
-              </div>
+        <div className="container mx-auto px-6 lg:px-12 relative z-10 py-20">
+          <div className="max-w-4xl mx-auto text-center">
+            {/* Trust Badge */}
+            <div className="inline-flex items-center gap-3 px-5 py-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-8">
+              <Shield className="text-green-400" size={20} />
+              <span className="text-white text-sm font-medium uppercase tracking-wider">Licensed Reinsurance Provider</span>
             </div>
             
-            {/* Right Column - Animated Shield & Boxes */}
-            <div className="hidden md:flex items-center justify-center">
-              <div className="relative w-full max-w-[500px] h-[600px]">
-                {/* Shield Composition Container */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[600px]">
-                  
-                  {/* Floating Box 1 - Top Left */}
-                  <img 
-                    src="data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='10' y='20' width='70' height='60' fill='%23D4A574' stroke='%238B6F47' stroke-width='2'/%3E%3Cpath d='M10 20 L50 10 L80 20' fill='%23B8956A' stroke='%238B6F47' stroke-width='2'/%3E%3Cpath d='M80 20 L90 25 L90 75 L80 80' fill='%239C7F5C' stroke='%238B6F47' stroke-width='2'/%3E%3Crect x='35' y='45' width='20' height='15' fill='%23000' opacity='0.1'/%3E%3C/svg%3E"
-                    alt=""
-                    className="absolute top-[15%] -left-[5%] w-[100px] h-[100px] animate-float-1 drop-shadow-[0_10px_30px_rgba(0,0,0,0.2)]"
-                  />
-                  
-                  {/* Floating Box 2 - Middle Left */}
-                  <img 
-                    src="data:image/svg+xml,%3Csvg width='130' height='130' viewBox='0 0 130 130' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='15' y='25' width='90' height='80' fill='%23D4A574' stroke='%238B6F47' stroke-width='2'/%3E%3Cpath d='M15 25 L60 12 L105 25' fill='%23B8956A' stroke='%238B6F47' stroke-width='2'/%3E%3Cpath d='M105 25 L118 32 L118 95 L105 105' fill='%239C7F5C' stroke='%238B6F47' stroke-width='2'/%3E%3Crect x='45' y='60' width='25' height='20' fill='%23000' opacity='0.1'/%3E%3C/svg%3E"
-                    alt=""
-                    className="absolute top-[55%] -left-[8%] w-[130px] h-[130px] animate-float-2 drop-shadow-[0_10px_30px_rgba(0,0,0,0.2)]"
-                  />
-                  
-                  {/* Floating Box 3 - Top Right */}
-                  <img 
-                    src="data:image/svg+xml,%3Csvg width='110' height='110' viewBox='0 0 110 110' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='12' y='22' width='75' height='65' fill='%23D4A574' stroke='%238B6F47' stroke-width='2'/%3E%3Cpath d='M12 22 L55 11 L87 22' fill='%23B8956A' stroke='%238B6F47' stroke-width='2'/%3E%3Cpath d='M87 22 L98 28 L98 82 L87 87' fill='%239C7F5C' stroke='%238B6F47' stroke-width='2'/%3E%3Crect x='38' y='50' width='22' height='18' fill='%23000' opacity='0.1'/%3E%3C/svg%3E"
-                    alt=""
-                    className="absolute top-[20%] -right-[5%] w-[110px] h-[110px] animate-float-3 drop-shadow-[0_10px_30px_rgba(0,0,0,0.2)]"
-                  />
-                  
-                  {/* Floating Box 4 - Bottom Right */}
-                  <img 
-                    src="data:image/svg+xml,%3Csvg width='85' height='85' viewBox='0 0 85 85' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='8' y='18' width='60' height='50' fill='%23D4A574' stroke='%238B6F47' stroke-width='2'/%3E%3Cpath d='M8 18 L42 9 L68 18' fill='%23B8956A' stroke='%238B6F47' stroke-width='2'/%3E%3Cpath d='M68 18 L76 23 L76 63 L68 68' fill='%239C7F5C' stroke='%238B6F47' stroke-width='2'/%3E%3Crect x='30' y='40' width='18' height='14' fill='%23000' opacity='0.1'/%3E%3C/svg%3E"
-                    alt=""
-                    className="absolute bottom-[15%] -right-[3%] w-[85px] h-[85px] animate-float-4 drop-shadow-[0_10px_30px_rgba(0,0,0,0.2)]"
-                  />
-                  
-                  {/* Main Shield with Box */}
-                  <img 
-                    src="data:image/svg+xml,%3Csvg width='400' height='480' viewBox='0 0 400 480' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3C!-- Shield --%3E%3Cpath d='M200 20 C160 20 120 40 80 60 L80 280 C80 360 120 420 200 460 C280 420 320 360 320 280 L320 60 C280 40 240 20 200 20 Z' fill='url(%23shieldGradient)' stroke='%23326FD1' stroke-width='3'/%3E%3C!-- Circuit pattern --%3E%3Cg opacity='0.6' stroke='%234A90E2' stroke-width='1.5'%3E%3Cpath d='M120 150 L140 150 M140 150 L140 180 L160 180 M160 180 L160 200 L180 200' stroke-linecap='round'/%3E%3Cpath d='M280 150 L260 150 M260 150 L260 180 L240 180 M240 180 L240 200 L220 200' stroke-linecap='round'/%3E%3Cpath d='M150 280 L180 280 L180 300 L200 300' stroke-linecap='round'/%3E%3Cpath d='M250 280 L220 280 L220 300 L200 300' stroke-linecap='round'/%3E%3Ccircle cx='140' cy='150' r='3' fill='%234A90E2'/%3E%3Ccircle cx='160' cy='180' r='3' fill='%234A90E2'/%3E%3Ccircle cx='180' cy='200' r='3' fill='%234A90E2'/%3E%3Ccircle cx='260' cy='150' r='3' fill='%234A90E2'/%3E%3Ccircle cx='240' cy='180' r='3' fill='%234A90E2'/%3E%3Ccircle cx='220' cy='200' r='3' fill='%234A90E2'/%3E%3Ccircle cx='180' cy='280' r='3' fill='%234A90E2'/%3E%3Ccircle cx='220' cy='280' r='3' fill='%234A90E2'/%3E%3C/g%3E%3C!-- Cardboard box on shield --%3E%3Cg transform='translate(150, 200)'%3E%3Crect x='0' y='20' width='100' height='90' fill='%23D4A574' stroke='%238B6F47' stroke-width='2'/%3E%3Cpath d='M0 20 L50 5 L100 20' fill='%23B8956A' stroke='%238B6F47' stroke-width='2'/%3E%3Cpath d='M100 20 L110 25 L110 100 L100 110' fill='%239C7F5C' stroke='%238B6F47' stroke-width='2'/%3E%3C!-- Tape --%3E%3Crect x='45' y='0' width='10' height='115' fill='%23B89968' opacity='0.6'/%3E%3C!-- Shipping label --%3E%3Crect x='20' y='70' width='35' height='25' fill='white' opacity='0.9'/%3E%3Cpath d='M25 75 L50 75 M25 80 L50 80 M25 85 L45 85' stroke='%23333' stroke-width='1' opacity='0.5'/%3E%3C/g%3E%3C!-- Shadow --%3E%3Cellipse cx='200' cy='470' rx='80' ry='15' fill='%23000' opacity='0.15'/%3E%3Cdefs%3E%3ClinearGradient id='shieldGradient' x1='200' y1='20' x2='200' y2='460'%3E%3Cstop offset='0%25' stop-color='%233D7ED9'/%3E%3Cstop offset='100%25' stop-color='%235A7FDB'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E"
-                    alt="Shield protecting packages"
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[480px] animate-float-main drop-shadow-[0_20px_60px_rgba(0,0,0,0.3)]"
-                  />
-                </div>
-              </div>
-            </div>
+            {/* Hero Headline */}
+            <h1 className="mb-6">
+              <span className="block text-3xl md:text-5xl font-medium text-white/90 mb-2">
+                Turn Package Protection
+              </span>
+              <span className="block display-1 text-white font-bold">
+                INTO PROFIT
+              </span>
+            </h1>
             
+            <p className="text-xl md:text-2xl text-white/90 mb-12 max-w-2xl mx-auto leading-relaxed">
+              Zero hassle. Real insurance. Better margins.
+            </p>
+            
+            {/* Hero CTAs */}
+            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center mb-12">
+              <a href="#calculator" className="btn btn-primary btn-large inline-flex items-center gap-2">
+                Calculate Your Profit
+                <ChevronRight size={20} />
+              </a>
+              <Link to="/apply" className="btn btn-secondary btn-large">
+                Apply Now
+              </Link>
+            </div>
           </div>
+        </div>
+        
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10">
+          <div className="w-0.5 h-10 bg-gradient-to-b from-transparent via-white/50 to-transparent animate-pulse" />
+          <span className="text-xs text-white/70 uppercase tracking-widest">Scroll to discover</span>
         </div>
       </section>
 
-      {/* Trust Signals */}
-      <section className="py-8 bg-muted">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-center gap-6 text-center">
-            <div className="flex items-center gap-2">
-              <Shield className="text-primary" size={24} />
-              <span className="font-semibold">Licensed Reinsurance Provider</span>
+      {/* Stats Bar */}
+      <section className="bg-primary-dark text-white py-16">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+            <div className="text-center">
+              <div className="text-5xl md:text-6xl font-bold mb-2" style={{ color: 'hsl(180 100% 45%)' }}>$50M+</div>
+              <div className="text-lg text-white/80">Packages Protected</div>
+            </div>
+            <div className="text-center">
+              <div className="text-5xl md:text-6xl font-bold mb-2" style={{ color: 'hsl(180 100% 45%)' }}>10K+</div>
+              <div className="text-lg text-white/80">Active Merchants</div>
+            </div>
+            <div className="text-center">
+              <div className="text-5xl md:text-6xl font-bold mb-2" style={{ color: 'hsl(180 100% 45%)' }}>99%</div>
+              <div className="text-lg text-white/80">Satisfaction Rate</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Value Propositions */}
-      <section className="py-12 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <h2 className="text-h2 mb-6">Merchant Benefits</h2>
-              <div className="space-y-6">
-                <div className="flex gap-4">
-                  <DollarSign className="text-primary flex-shrink-0" size={24} />
+      <section className="py-24 bg-[#f8f9fe]">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            
+            {/* Make Money */}
+            <div className="relative bg-white rounded-xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border-l-4" style={{ borderColor: 'hsl(163 100% 43%)' }}>
+              <div className="mb-6">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                  <circle cx="32" cy="32" r="30" stroke="url(#gradient1)" strokeWidth="2"/>
+                  <text x="32" y="42" textAnchor="middle" fill="url(#gradient1)" fontSize="32" fontWeight="bold">$</text>
+                  <defs>
+                    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style={{ stopColor: '#1e2099' }}/>
+                      <stop offset="100%" style={{ stopColor: '#4d51db' }}/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              
+              <h3 className="text-3xl font-bold mb-4" style={{ color: 'hsl(238 69% 36%)' }}>Make Money</h3>
+              
+              <div className="mb-4">
+                <div className="text-5xl font-bold" style={{ color: 'hsl(163 100% 43%)' }}>$2.49+</div>
+                <div className="text-base font-medium" style={{ color: 'hsl(215 16% 47%)' }}>profit per package</div>
+              </div>
+              
+              <p className="text-lg leading-relaxed" style={{ color: 'hsl(215 16% 47%)' }}>
+                Mark up insurance costs and turn protection into a profit center. No overhead, pure margin.
+              </p>
+            </div>
+            
+            {/* Save Time */}
+            <div className="relative bg-white rounded-xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border-l-4" style={{ borderColor: 'hsl(238 69% 36%)' }}>
+              <div className="mb-6">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                  <circle cx="32" cy="32" r="30" stroke="url(#gradient2)" strokeWidth="2"/>
+                  <circle cx="32" cy="32" r="3" fill="url(#gradient2)"/>
+                  <line x1="32" y1="32" x2="32" y2="16" stroke="url(#gradient2)" strokeWidth="2" strokeLinecap="round"/>
+                  <defs>
+                    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style={{ stopColor: '#1e2099' }}/>
+                      <stop offset="100%" style={{ stopColor: '#4d51db' }}/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              
+              <h3 className="text-3xl font-bold mb-4" style={{ color: 'hsl(238 69% 36%)' }}>Save Time</h3>
+              
+              <div className="mb-4">
+                <div className="text-5xl font-bold" style={{ color: 'hsl(163 100% 43%)' }}>0 minutes</div>
+                <div className="text-base font-medium" style={{ color: 'hsl(215 16% 47%)' }}>spent per claim</div>
+              </div>
+              
+              <p className="text-lg leading-relaxed" style={{ color: 'hsl(215 16% 47%)' }}>
+                Merchants never touch claims. Direct customers to our portal and forget about it.
+              </p>
+            </div>
+            
+            {/* Protect Customers */}
+            <div className="relative bg-white rounded-xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border-l-4" style={{ borderColor: 'hsl(238 63% 58%)' }}>
+              <div className="mb-6">
+                <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+                  <path d="M32 8L12 18V32C12 44 20 54 32 56C44 54 52 44 52 32V18L32 8Z" stroke="url(#gradient3)" strokeWidth="2" fill="none"/>
+                  <path d="M22 32L28 38L42 24" stroke="url(#gradient3)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <defs>
+                    <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style={{ stopColor: '#1e2099' }}/>
+                      <stop offset="100%" style={{ stopColor: '#4d51db' }}/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              
+              <h3 className="text-3xl font-bold mb-4" style={{ color: 'hsl(238 69% 36%)' }}>Protect Customers</h3>
+              
+              <div className="mb-4">
+                <div className="text-5xl font-bold" style={{ color: 'hsl(163 100% 43%)' }}>5-7 days</div>
+                <div className="text-base font-medium" style={{ color: 'hsl(215 16% 47%)' }}>claim resolution</div>
+              </div>
+              
+              <p className="text-lg leading-relaxed" style={{ color: 'hsl(215 16% 47%)' }}>
+                Fast payouts with comprehensive coverage including porch piracy.
+              </p>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+
+      {/* Calculator Section */}
+      <section id="calculator" className="py-24 bg-gradient-to-b from-white to-[#e8e9f9] min-h-screen flex items-center">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="heading-2 mb-4" style={{ color: 'hsl(238 69% 36%)' }}>See Your Profit Potential</h2>
+              <p className="text-xl" style={{ color: 'hsl(215 16% 47%)' }}>Real numbers. Real profit.</p>
+            </div>
+            
+            {/* Calculator Tabs */}
+            <div className="flex gap-2 border-b-2 mb-8" style={{ borderColor: 'hsl(214 15% 66%)' }}>
+              <button
+                onClick={() => setActiveTab('basic')}
+                className={`px-8 py-4 text-lg font-semibold transition-all duration-200 relative -bottom-0.5 ${
+                  activeTab === 'basic'
+                    ? 'border-b-3'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+                style={activeTab === 'basic' ? { 
+                  color: 'hsl(238 69% 36%)', 
+                  borderBottom: '3px solid hsl(238 69% 36%)' 
+                } : {}}
+              >
+                Basic Cost
+              </button>
+              <button
+                onClick={() => setActiveTab('profit')}
+                className={`px-8 py-4 text-lg font-semibold transition-all duration-200 relative -bottom-0.5 ${
+                  activeTab === 'profit'
+                    ? 'border-b-3'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+                style={activeTab === 'profit' ? { 
+                  color: 'hsl(238 69% 36%)', 
+                  borderBottom: '3px solid hsl(238 69% 36%)' 
+                } : {}}
+              >
+                Profit Calculator
+              </button>
+            </div>
+            
+            {/* Calculator Panels */}
+            <div className="min-h-[500px]">
+              {/* Basic Cost Panel */}
+              {activeTab === 'basic' && (
+                <div className="space-y-8 animate-fade-in">
                   <div>
-                    <h3 className="font-semibold mb-2">Profitable</h3>
-                    <p className="text-muted-foreground">Mark up insurance costs to increase revenue per order</p>
+                    <label className="block text-sm font-semibold uppercase tracking-wider mb-3" style={{ color: 'hsl(227 33% 16%)' }}>
+                      Package Value
+                    </label>
+                    <div className="relative mb-4">
+                      <span className="absolute left-6 top-1/2 -translate-y-1/2 text-2xl font-semibold" style={{ color: 'hsl(215 16% 47%)' }}>$</span>
+                      <input
+                        type="number"
+                        value={basicValue}
+                        onChange={(e) => setBasicValue(Number(e.target.value))}
+                        className="w-full pl-12 pr-6 py-4 text-3xl font-semibold border-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-3"
+                        style={{ 
+                          borderColor: 'hsl(214 15% 66%)',
+                          color: 'hsl(227 33% 16%)'
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = 'hsl(238 69% 36%)';
+                          e.target.style.boxShadow = '0 0 0 3px hsla(238 69% 36% / 0.1)';
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = 'hsl(214 15% 66%)';
+                          e.target.style.boxShadow = 'none';
+                        }}
+                      />
+                    </div>
+                    <input
+                      type="range"
+                      min="0"
+                      max="1000"
+                      step="10"
+                      value={basicValue}
+                      onChange={(e) => setBasicValue(Number(e.target.value))}
+                      className="w-full h-2 rounded-full appearance-none cursor-pointer"
+                      style={{ 
+                        background: 'hsl(214 15% 66%)',
+                      }}
+                    />
                   </div>
-                </div>
-                <div className="flex gap-4">
-                  <Shield className="text-primary flex-shrink-0" size={24} />
-                  <div>
-                    <h3 className="font-semibold mb-2">Zero Involvement</h3>
-                    <p className="text-muted-foreground">Never handle claims - customers contact PARCELIS directly</p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <Clock className="text-primary flex-shrink-0" size={24} />
-                  <div>
-                    <h3 className="font-semibold mb-2">Fast Payouts</h3>
-                    <p className="text-muted-foreground">5-7 business day claim resolution</p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <Globe className="text-primary flex-shrink-0" size={24} />
-                  <div>
-                    <h3 className="font-semibold mb-2">All Carriers</h3>
-                    <p className="text-muted-foreground">USPS, UPS, FedEx, DHL, and all international carriers supported</p>
-                    <div className="flex items-center gap-3 mt-3">
-                      <img src={uspsLogo} alt="USPS logo" className="h-6 object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                      <img src={upsLogo} alt="UPS logo" className="h-6 object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                      <img src={fedexLogo} alt="FedEx logo" className="h-6 object-contain opacity-70 hover:opacity-100 transition-opacity" />
-                      <img src={dhlLogo} alt="DHL logo" className="h-6 object-contain opacity-70 hover:opacity-100 transition-opacity" />
+                  
+                  <div className="bg-white rounded-xl p-8 border-2 shadow-md" style={{ borderColor: 'hsl(238 69% 36%)' }}>
+                    <div className="text-base font-semibold uppercase tracking-wider mb-2" style={{ color: 'hsl(215 16% 47%)' }}>
+                      Your Base Cost
+                    </div>
+                    <div className="text-6xl font-bold mb-2" style={{ color: 'hsl(238 69% 36%)' }}>
+                      {basicTier.cost === null ? 'Custom Quote' : basicTier.cost === 0 ? 'N/A' : formatCurrency(basicTier.cost)}
+                    </div>
+                    <div className="text-base" style={{ color: 'hsl(215 16% 47%)' }}>
+                      {basicTier.description}
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
+              
+              {/* Profit Calculator Panel */}
+              {activeTab === 'profit' && (
+                <div className="space-y-8 animate-fade-in">
+                  <div>
+                    <label className="block text-sm font-semibold uppercase tracking-wider mb-3" style={{ color: 'hsl(227 33% 16%)' }}>
+                      Package Value
+                    </label>
+                    <div className="relative mb-4">
+                      <span className="absolute left-6 top-1/2 -translate-y-1/2 text-2xl font-semibold" style={{ color: 'hsl(215 16% 47%)' }}>$</span>
+                      <input
+                        type="number"
+                        value={profitValue}
+                        onChange={(e) => setProfitValue(Number(e.target.value))}
+                        className="w-full pl-12 pr-6 py-4 text-3xl font-semibold border-2 rounded-lg transition-all duration-200 focus:outline-none"
+                        style={{ 
+                          borderColor: 'hsl(214 15% 66%)',
+                          color: 'hsl(227 33% 16%)'
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = 'hsl(238 69% 36%)';
+                          e.target.style.boxShadow = '0 0 0 3px hsla(238 69% 36% / 0.1)';
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = 'hsl(214 15% 66%)';
+                          e.target.style.boxShadow = 'none';
+                        }}
+                      />
+                    </div>
+                    <input
+                      type="range"
+                      min="0"
+                      max="1000"
+                      step="10"
+                      value={profitValue}
+                      onChange={(e) => setProfitValue(Number(e.target.value))}
+                      className="w-full h-2 rounded-full appearance-none cursor-pointer mb-2"
+                      style={{ background: 'hsl(214 15% 66%)' }}
+                    />
+                    <div className="text-sm" style={{ color: 'hsl(215 16% 47%)' }}>
+                      Your base cost: <strong style={{ color: 'hsl(238 69% 36%)' }}>
+                        {profitTier.cost === null ? 'Custom' : formatCurrency(profitTier.cost || 0)}
+                      </strong>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-semibold uppercase tracking-wider mb-3" style={{ color: 'hsl(227 33% 16%)' }}>
+                      Your Customer Price
+                    </label>
+                    <div className="relative mb-4">
+                      <span className="absolute left-6 top-1/2 -translate-y-1/2 text-2xl font-semibold" style={{ color: 'hsl(215 16% 47%)' }}>$</span>
+                      <input
+                        type="number"
+                        step="0.01"
+                        value={customerPrice}
+                        onChange={(e) => setCustomerPrice(Number(e.target.value))}
+                        className="w-full pl-12 pr-6 py-4 text-3xl font-semibold border-2 rounded-lg transition-all duration-200 focus:outline-none"
+                        style={{ 
+                          borderColor: 'hsl(214 15% 66%)',
+                          color: 'hsl(227 33% 16%)'
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = 'hsl(238 69% 36%)';
+                          e.target.style.boxShadow = '0 0 0 3px hsla(238 69% 36% / 0.1)';
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = 'hsl(214 15% 66%)';
+                          e.target.style.boxShadow = 'none';
+                        }}
+                      />
+                    </div>
+                    <input
+                      type="range"
+                      min="0"
+                      max="20"
+                      step="0.50"
+                      value={customerPrice}
+                      onChange={(e) => setCustomerPrice(Number(e.target.value))}
+                      className="w-full h-2 rounded-full appearance-none cursor-pointer"
+                      style={{ background: 'hsl(214 15% 66%)' }}
+                    />
+                  </div>
+                  
+                  <div className="bg-white rounded-xl p-8 border-2 shadow-md" style={{ borderColor: 'hsl(163 100% 43%)' }}>
+                    <div className="space-y-3 mb-6">
+                      <div className="flex justify-between text-lg">
+                        <span>Customer Pays:</span>
+                        <span className="font-semibold font-mono">{formatCurrency(customerPrice)}</span>
+                      </div>
+                      <div className="flex justify-between text-lg">
+                        <span>Your Cost:</span>
+                        <span className="font-semibold font-mono">{formatCurrency(profitTier.cost || 0)}</span>
+                      </div>
+                      <div className="h-0.5" style={{ background: 'hsl(214 15% 66%)' }} />
+                      <div className="flex justify-between text-xl font-bold">
+                        <span>Your Profit:</span>
+                        <span className="text-3xl" style={{ color: 'hsl(163 100% 43%)' }}>{formatCurrency(profit)}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="mb-6">
+                      <div className="flex h-16 rounded-lg overflow-hidden">
+                        <div 
+                          className="flex items-center justify-center text-white font-semibold text-sm transition-all duration-400"
+                          style={{ 
+                            width: `${costPercent}%`,
+                            background: 'linear-gradient(135deg, hsl(238 69% 36%) 0%, hsl(238 63% 58%) 100%)'
+                          }}
+                        >
+                          Cost
+                        </div>
+                        <div 
+                          className="flex items-center justify-center text-white font-semibold text-sm transition-all duration-400"
+                          style={{ 
+                            width: `${profitPercent}%`,
+                            background: 'hsl(163 100% 43%)'
+                          }}
+                        >
+                          Profit
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-wrap items-center gap-2 text-base" style={{ color: 'hsl(215 16% 47%)' }}>
+                      <span>At</span>
+                      <input
+                        type="number"
+                        value={volume}
+                        onChange={(e) => setVolume(Number(e.target.value))}
+                        className="w-20 px-2 py-1 text-center font-semibold border rounded"
+                        style={{ borderColor: 'hsl(214 15% 66%)' }}
+                      />
+                      <span>packages/month:</span>
+                      <strong className="text-2xl" style={{ color: 'hsl(163 100% 43%)' }}>
+                        {formatCurrency(annualProfit)}/year
+                      </strong>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
+            
+            <div className="mt-12 text-center">
+              <Link to="/apply" className="btn btn-primary btn-large">
+                Start Earning with PARCELIS
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <div>
-              <h2 className="text-h2 mb-6">Customer Protection</h2>
-              <div className="space-y-6">
-                <div className="flex gap-4">
-                  <Shield className="text-primary flex-shrink-0" size={24} />
-                  <div>
-                    <h3 className="font-semibold mb-2">Complete Coverage</h3>
-                    <p className="text-muted-foreground">Lost, damaged, AND stolen packages (including porch piracy)</p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <Globe className="text-primary flex-shrink-0" size={24} />
-                  <div>
-                    <h3 className="font-semibold mb-2">Global Coverage</h3>
-                    <p className="text-muted-foreground">Unlimited geographic protection</p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <Clock className="text-primary flex-shrink-0" size={24} />
-                  <div>
-                    <h3 className="font-semibold mb-2">Simple Claims</h3>
-                    <p className="text-muted-foreground">Easy filing process with email tracking</p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <Shield className="text-primary flex-shrink-0" size={24} />
-                  <div>
-                    <h3 className="font-semibold mb-2">Real Insurance</h3>
-                    <p className="text-muted-foreground">Legitimate licensed coverage, not a tech workaround</p>
-                  </div>
-                </div>
+      {/* Social Proof & Platforms */}
+      <section className="py-24 bg-gradient-to-br from-[#1e2099] to-[#2a2fb5] text-white">
+        <div className="container mx-auto px-6 lg:px-12">
+          
+          <h2 className="heading-2 text-center text-white mb-16">Trusted by Growing Brands</h2>
+          
+          {/* Testimonial */}
+          <div className="max-w-4xl mx-auto mb-20 p-12 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl transform -rotate-1 hover:rotate-0 transition-transform duration-400">
+            <svg className="text-white opacity-20 mb-6" width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <path d="M12 28C12 24 14 20 18 18C16 18 14 16 14 14C14 12 16 10 18 10C22 10 24 12 24 18V28C24 32 22 36 18 36C14 36 12 34 12 28Z" fill="currentColor"/>
+              <path d="M28 28C28 24 30 20 34 18C32 18 30 16 30 14C30 12 32 10 34 10C38 10 40 12 40 18V28C40 32 38 36 34 36C30 36 28 34 28 28Z" fill="currentColor"/>
+            </svg>
+            
+            <p className="text-2xl md:text-3xl font-normal text-white leading-relaxed mb-8">
+              PARCELIS added $1,200 per month in pure profit with zero effort on our end. The calculator sold us immediately—we could see the exact ROI before even applying.
+            </p>
+            
+            <div className="flex items-center gap-6 flex-wrap">
+              <div className="w-20 h-20 rounded-full bg-white/20 border-2 border-white/30" />
+              <div className="flex-1 min-w-[200px]">
+                <div className="text-xl font-bold text-white">Sarah Chen</div>
+                <div className="text-base text-white/80">Founder & CEO</div>
+                <div className="text-base text-white/80">ModernGoods</div>
+              </div>
+              <div className="ml-auto">
+                <span className="inline-block px-6 py-3 rounded-full font-bold text-lg text-white" style={{ background: 'hsl(163 100% 43%)' }}>
+                  +$1,200/mo profit
+                </span>
               </div>
             </div>
           </div>
+          
+          {/* Platform Integrations */}
+          <div className="max-w-6xl mx-auto">
+            <h3 className="heading-3 text-center text-white mb-12">Seamlessly Integrated</h3>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              
+              {/* Shopify */}
+              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 hover:bg-white/15 hover:-translate-y-1 transition-all duration-300">
+                <div className="h-20 flex items-center justify-center mb-4">
+                  <img src={shopifyLogo} alt="Shopify" className="max-h-16 object-contain" />
+                </div>
+                <div className="text-xl font-bold text-white text-center mb-2">Shopify</div>
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'hsl(163 100% 43%)' }} />
+                  <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: 'hsl(163 100% 43%)' }}>LIVE</span>
+                </div>
+                <div className="text-sm text-white/70 text-center">One-click app</div>
+              </div>
+              
+              {/* 29next */}
+              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 hover:bg-white/15 hover:-translate-y-1 transition-all duration-300">
+                <div className="h-20 flex items-center justify-center mb-4">
+                  <img src={twentyNineNextLogo} alt="29next" className="max-h-16 object-contain" />
+                </div>
+                <div className="text-xl font-bold text-white text-center mb-2">29next</div>
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'hsl(163 100% 43%)' }} />
+                  <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: 'hsl(163 100% 43%)' }}>LIVE</span>
+                </div>
+                <div className="text-sm text-white/70 text-center">Full integration</div>
+              </div>
+              
+              {/* WooCommerce */}
+              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 hover:bg-white/15 hover:-translate-y-1 transition-all duration-300">
+                <div className="h-20 flex items-center justify-center mb-4">
+                  <div className="text-4xl">🛒</div>
+                </div>
+                <div className="text-xl font-bold text-white text-center mb-2">WooCommerce</div>
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <div className="w-2 h-2 rounded-full bg-white/50" />
+                  <span className="text-sm font-semibold uppercase tracking-wider text-white/70 border border-dashed border-white/30 px-3 py-1 rounded-full">COMING SOON</span>
+                </div>
+                <div className="text-sm text-white/70 text-center">Plugin available</div>
+              </div>
+              
+              {/* BigCommerce */}
+              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 hover:bg-white/15 hover:-translate-y-1 transition-all duration-300">
+                <div className="h-20 flex items-center justify-center mb-4">
+                  <div className="text-4xl">🏪</div>
+                </div>
+                <div className="text-xl font-bold text-white text-center mb-2">BigCommerce</div>
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <div className="w-2 h-2 rounded-full bg-white/50" />
+                  <span className="text-sm font-semibold uppercase tracking-wider text-white/70 border border-dashed border-white/30 px-3 py-1 rounded-full">COMING SOON</span>
+                </div>
+                <div className="text-sm text-white/70 text-center">Native integration</div>
+              </div>
+              
+              {/* Magento */}
+              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 hover:bg-white/15 hover:-translate-y-1 transition-all duration-300">
+                <div className="h-20 flex items-center justify-center mb-4">
+                  <div className="text-4xl">🔧</div>
+                </div>
+                <div className="text-xl font-bold text-white text-center mb-2">Magento</div>
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <div className="w-2 h-2 rounded-full bg-white/50" />
+                  <span className="text-sm font-semibold uppercase tracking-wider text-white/70 border border-dashed border-white/30 px-3 py-1 rounded-full">COMING SOON</span>
+                </div>
+                <div className="text-sm text-white/70 text-center">Extension available</div>
+              </div>
+              
+              {/* Custom API */}
+              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 hover:bg-white/15 hover:-translate-y-1 transition-all duration-300">
+                <div className="h-20 flex items-center justify-center mb-4">
+                  <Code size={48} className="text-white" />
+                </div>
+                <div className="text-xl font-bold text-white text-center mb-2">Custom API</div>
+                <div className="flex items-center justify-center gap-2 mb-3">
+                  <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'hsl(163 100% 43%)' }} />
+                  <span className="text-sm font-semibold uppercase tracking-wider" style={{ color: 'hsl(163 100% 43%)' }}>AVAILABLE</span>
+                </div>
+                <div className="text-sm text-white/70 text-center">RESTful API</div>
+              </div>
+              
+            </div>
+          </div>
+          
         </div>
       </section>
 
       {/* How It Works Summary */}
-      <section className="py-12 md:py-24">
-        <div className="container mx-auto px-4">
-          <h2 className="text-h2 text-center mb-12">Simple Process, Zero Hassle</h2>
-          <div className="grid md:grid-cols-3 gap-8">
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-6 lg:px-12">
+          <h2 className="heading-2 text-center mb-16" style={{ color: 'hsl(238 69% 36%)' }}>Simple Process, Zero Hassle</h2>
+          <div className="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+              <div className="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 text-white" style={{ background: 'var(--gradient-primary)' }}>
                 1
               </div>
-              <h3 className="text-h4 mb-3">Integrate</h3>
-              <p className="text-text-secondary">Connect via Shopify app or platform integration</p>
+              <h3 className="text-2xl font-bold mb-4" style={{ color: 'hsl(238 69% 36%)' }}>Integrate</h3>
+              <p className="text-lg" style={{ color: 'hsl(215 16% 47%)' }}>Connect via Shopify app or platform integration</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+              <div className="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 text-white" style={{ background: 'var(--gradient-primary)' }}>
                 2
               </div>
-              <h3 className="text-h4 mb-3">Sell</h3>
-              <p className="text-text-secondary">Insurance option appears at checkout - customers opt in</p>
+              <h3 className="text-2xl font-bold mb-4" style={{ color: 'hsl(238 69% 36%)' }}>Sell</h3>
+              <p className="text-lg" style={{ color: 'hsl(215 16% 47%)' }}>Insurance option appears at checkout - customers opt in</p>
             </div>
             <div className="text-center">
-              <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+              <div className="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 text-white" style={{ background: 'var(--gradient-primary)' }}>
                 3
               </div>
-              <h3 className="text-h4 mb-3">Relax</h3>
-              <p className="text-text-secondary">Claims go directly to PARCELIS - you stay focused on growth</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Platform Integration */}
-      <section className="py-12 md:py-24 bg-background-gray">
-        <div className="container mx-auto px-4">
-          <h2 className="text-h2 text-center mb-12">Seamless Platform Integrations</h2>
-          <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
-            {/* Shopify Card */}
-            <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex items-center justify-between mb-4">
-                <img src={shopifyLogo} alt="Shopify" className="h-16 object-contain" />
-                <span className="bg-primary text-white px-4 py-2 rounded-full text-xl font-semibold">
-                  LIVE NOW
-                </span>
-              </div>
-              <h3 className="text-2xl font-bold mb-3">Shopify One-Click Integration</h3>
-              <p className="text-text-secondary mb-6 leading-relaxed">
-                Install our app from the Shopify App Store and activate insurance at checkout in under 5 minutes.
-              </p>
-              <Button asChild className="w-full bg-primary hover:bg-primary-hover">
-                <Link to="/how-it-works">View Integration Details</Link>
-              </Button>
-            </div>
-
-            {/* 29next Card */}
-            <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex items-center justify-between mb-4">
-                <img src={twentyNineNextLogo} alt="29next" className="h-16 object-contain" />
-                <span className="bg-primary text-white px-4 py-2 rounded-full text-xl font-semibold">
-                  LIVE NOW
-                </span>
-              </div>
-              <h3 className="text-2xl font-bold mb-3">29next Native Integration</h3>
-              <p className="text-text-secondary mb-6 leading-relaxed">
-                Seamlessly add insurance to your 29next checkout flow with our native integration.
-              </p>
-              <Button asChild className="w-full bg-primary hover:bg-primary-hover">
-                <Link to="/how-it-works">Learn More</Link>
-              </Button>
+              <h3 className="text-2xl font-bold mb-4" style={{ color: 'hsl(238 69% 36%)' }}>Relax</h3>
+              <p className="text-lg" style={{ color: 'hsl(215 16% 47%)' }}>Claims go directly to PARCELIS - you stay focused on growth</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* All Major Carriers */}
-      <section className="py-12 md:py-24">
-        <div className="container mx-auto px-4">
-          <h2 className="text-h2 text-center mb-4">All Major Carriers Covered</h2>
-          <p className="text-body-lg text-text-secondary text-center mb-12 max-w-3xl mx-auto">
+      <section className="py-24 bg-[#f8f9fe]">
+        <div className="container mx-auto px-6 lg:px-12">
+          <h2 className="heading-2 text-center mb-4" style={{ color: 'hsl(238 69% 36%)' }}>All Major Carriers Covered</h2>
+          <p className="text-xl text-center mb-16 max-w-3xl mx-auto" style={{ color: 'hsl(215 16% 47%)' }}>
             Comprehensive protection across USPS, UPS, FedEx, DHL, and all regional and international carriers
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-12 md:gap-16">
+          <div className="flex flex-wrap items-center justify-center gap-16 max-w-4xl mx-auto">
             <div className="text-center">
-              <img src={uspsLogo} alt="USPS shipping logo" className="h-12 md:h-16 object-contain mx-auto mb-2" />
-              <p className="text-sm font-medium text-muted-foreground">USPS</p>
+              <img src={uspsLogo} alt="USPS shipping logo" className="h-16 object-contain mx-auto mb-3 opacity-70 hover:opacity-100 transition-opacity" />
+              <p className="text-sm font-medium" style={{ color: 'hsl(215 16% 47%)' }}>USPS</p>
             </div>
             <div className="text-center">
-              <img src={upsLogo} alt="UPS shipping logo" className="h-12 md:h-16 object-contain mx-auto mb-2" />
-              <p className="text-sm font-medium text-muted-foreground">UPS</p>
+              <img src={upsLogo} alt="UPS shipping logo" className="h-16 object-contain mx-auto mb-3 opacity-70 hover:opacity-100 transition-opacity" />
+              <p className="text-sm font-medium" style={{ color: 'hsl(215 16% 47%)' }}>UPS</p>
             </div>
             <div className="text-center">
-              <img src={fedexLogo} alt="FedEx shipping logo" className="h-12 md:h-16 object-contain mx-auto mb-2" />
-              <p className="text-sm font-medium text-muted-foreground">FedEx</p>
+              <img src={fedexLogo} alt="FedEx shipping logo" className="h-16 object-contain mx-auto mb-3 opacity-70 hover:opacity-100 transition-opacity" />
+              <p className="text-sm font-medium" style={{ color: 'hsl(215 16% 47%)' }}>FedEx</p>
             </div>
             <div className="text-center">
-              <img src={dhlLogo} alt="DHL shipping logo" className="h-12 md:h-16 object-contain mx-auto mb-2" />
-              <p className="text-sm font-medium text-muted-foreground">DHL</p>
+              <img src={dhlLogo} alt="DHL shipping logo" className="h-16 object-contain mx-auto mb-3 opacity-70 hover:opacity-100 transition-opacity" />
+              <p className="text-sm font-medium" style={{ color: 'hsl(215 16% 47%)' }}>DHL</p>
             </div>
           </div>
-          <p className="text-center text-muted-foreground mt-8">+ all regional and international carriers</p>
+          <p className="text-center mt-12" style={{ color: 'hsl(215 16% 47%)' }}>+ all regional and international carriers</p>
         </div>
       </section>
 
       {/* Final CTA */}
-      <section className="py-12 md:py-24 bg-primary-dark text-primary-foreground">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-h2 mb-8">Ready to Protect Packages and Boost Profits?</h2>
-          <Button asChild variant="hero" size="lg" className="bg-background text-primary hover:bg-background/90">
-            <Link to="/apply">Apply Now</Link>
-          </Button>
+      <section className="py-24 bg-primary-dark text-white">
+        <div className="container mx-auto px-6 lg:px-12 text-center">
+          <h2 className="heading-2 text-white mb-4">Ready to Protect Packages and Boost Profits?</h2>
+          <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto">
+            Join thousands of merchants turning package protection into profit
+          </p>
+          <Link to="/apply" className="btn btn-large inline-flex items-center gap-2 bg-white hover:bg-white/90" style={{ color: 'hsl(238 69% 36%)' }}>
+            Apply Now
+            <ChevronRight size={20} />
+          </Link>
         </div>
       </section>
     </div>

@@ -254,6 +254,79 @@ All colors MUST be HSL.
     letter-spacing: 0.05em;
   }
 
+  /* Button Styles */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 32px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 200ms ease-out;
+    text-decoration: none;
+    border: none;
+    gap: 8px;
+  }
+
+  .btn-primary {
+    background: var(--gradient-primary);
+    color: hsl(var(--color-white));
+    box-shadow: var(--shadow-blue);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px hsla(238 69% 36% / 0.2);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: hsl(var(--color-royal-blue));
+    border: 2px solid hsl(var(--color-royal-blue));
+  }
+
+  .btn-secondary:hover {
+    background: hsl(var(--color-royal-blue));
+    color: hsl(var(--color-white));
+  }
+
+  .btn-large {
+    padding: 20px 48px;
+    font-size: 18px;
+  }
+
+  /* Section Spacing */
+  section {
+    padding: var(--space-4xl) var(--space-md);
+  }
+
+  @media (min-width: 768px) {
+    section {
+      padding: var(--space-4xl) var(--space-2xl);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    section {
+      padding: 160px var(--space-3xl);
+    }
+  }
+
+  /* Container */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+  }
+
+  @media (min-width: 768px) {
+    .container {
+      padding: 0 var(--space-xl);
+    }
+  }
+
   /* Legacy typography classes for compatibility */
   .text-h1 {
     font-size: var(--font-size-h1);
