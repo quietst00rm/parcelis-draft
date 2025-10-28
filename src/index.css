@@ -2,6 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hero Animations */
+@keyframes float-1 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-10px, -15px); }
+}
+
+@keyframes float-2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-8px, 12px); }
+}
+
+@keyframes float-3 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(10px, -12px); }
+}
+
+@keyframes float-4 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(8px, 10px); }
+}
+
+@keyframes float-main {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-10px); }
+}
+
+.animate-float-1 { animation: float-1 4s ease-in-out infinite; }
+.animate-float-2 { animation: float-2 5s ease-in-out infinite; }
+.animate-float-3 { animation: float-3 4.5s ease-in-out infinite; }
+.animate-float-4 { animation: float-4 5.5s ease-in-out infinite; }
+.animate-float-main { animation: float-main 6s ease-in-out infinite; }
+
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
