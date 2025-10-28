@@ -248,6 +248,18 @@ All colors MUST be HSL.
     animation: pulse-dots 4s ease-in-out infinite;
   }
 
+  /* Light dotted pattern for light backgrounds */
+  .dotted-pattern-light {
+    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  /* Subtle floating animation for accent elements */
+  .floating-box-subtle {
+    animation: float-subtle 4s ease-in-out infinite;
+    will-change: transform;
+  }
+
   /* Reduced motion support */
   @media (prefers-reduced-motion: reduce) {
     .floating-box-1,
@@ -255,6 +267,7 @@ All colors MUST be HSL.
     .floating-box-3,
     .floating-box-4,
     .floating-shield,
+    .floating-box-subtle,
     .hero-content-fade,
     .dotted-pattern {
       animation: none;

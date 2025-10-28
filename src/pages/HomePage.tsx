@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Shield, DollarSign, Clock, Globe } from "lucide-react";
+import { Shield, DollarSign, Clock, Globe, ChevronRight, Package } from "lucide-react";
 import hartfordLogo from "@/assets/logos/hartford.png";
 import uspsLogo from "@/assets/carriers/usps.png";
 import dhlLogo from "@/assets/carriers/dhl.png";
@@ -8,96 +8,73 @@ import upsLogo from "@/assets/carriers/ups.png";
 import fedexLogo from "@/assets/carriers/fedex.png";
 import shopifyLogo from "@/assets/platforms/shopify.png";
 import twentyNineNextLogo from "@/assets/platforms/29next.png";
-import boxesImg from "@/assets/hero/boxes.png";
-import shieldImg from "@/assets/hero/shield.png";
 
 const HomePage = () => {
   return (
     <div className="min-h-screen">
-      {/* Hero Section with Animated Background */}
-      <section className="relative bg-primary-dark text-primary-foreground py-12 md:py-24 pt-20 overflow-hidden">
-        {/* Dotted Pattern Background Layer */}
-        <div className="absolute inset-0 dotted-pattern opacity-50 pointer-events-none" aria-hidden="true" />
+      {/* Hero Section - InsureShip Inspired */}
+      <section className="relative bg-[#F8FAFB] text-foreground py-16 md:py-32 pt-24 overflow-hidden">
+        {/* Subtle Dotted Pattern Background */}
+        <div className="absolute inset-0 dotted-pattern-light opacity-100 pointer-events-none" aria-hidden="true" />
         
-        {/* Floating Package Boxes - Background Layer */}
-        <div className="absolute inset-0 pointer-events-none z-[5]" aria-hidden="true" role="presentation">
-          {/* Box 1 - Large, Top Left */}
-          <img 
-            src={boxesImg}
-            alt=""
-            className="floating-box-1 absolute top-[10%] left-[5%] w-32 md:w-48 opacity-30"
-            style={{ filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.3))' }}
-          />
-          
-          {/* Box 2 - Medium, Bottom Left */}
-          <img 
-            src={boxesImg}
-            alt=""
-            className="floating-box-2 absolute bottom-[15%] left-[8%] w-24 md:w-36 opacity-40"
-            style={{ filter: 'drop-shadow(0 15px 30px rgba(0,0,0,0.25))' }}
-          />
-        </div>
+        {/* Geometric Accent Shape - Top Right Diagonal */}
+        <div 
+          className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-br from-primary/10 to-transparent transform rotate-12 translate-x-32 -translate-y-32 pointer-events-none" 
+          aria-hidden="true" 
+        />
         
-        {/* Shield Icon - Mid Layer (Desktop Only) */}
-        <div className="absolute inset-0 pointer-events-none hidden md:block z-[10]" aria-hidden="true" role="presentation">
-          <img 
-            src={shieldImg}
-            alt=""
-            className="floating-shield absolute top-[20%] right-[8%] w-64 lg:w-80 opacity-60"
-            style={{ filter: 'drop-shadow(0 25px 50px rgba(0,0,0,0.4))' }}
-          />
-        </div>
-        
-        {/* Floating Boxes - Foreground Layer */}
-        <div className="absolute inset-0 pointer-events-none z-[15]" aria-hidden="true" role="presentation">
-          {/* Box 3 - Medium, Right Side */}
-          <img 
-            src={boxesImg}
-            alt=""
-            className="floating-box-3 absolute top-[35%] right-[15%] w-28 md:w-40 opacity-70"
-            style={{ filter: 'drop-shadow(0 18px 35px rgba(0,0,0,0.3))' }}
-          />
-          
-          {/* Box 4 - Small, Bottom Right */}
-          <img 
-            src={boxesImg}
-            alt=""
-            className="floating-box-4 absolute bottom-[20%] right-[20%] w-20 md:w-28 opacity-80"
-            style={{ filter: 'drop-shadow(0 12px 25px rgba(0,0,0,0.2))' }}
-          />
-        </div>
-        
-        {/* Mobile Only - Simplified Boxes */}
-        <div className="absolute inset-0 pointer-events-none md:hidden z-[5]" aria-hidden="true" role="presentation">
-          <img 
-            src={boxesImg}
-            alt=""
-            className="floating-box-1 absolute top-[15%] right-[10%] w-20 opacity-40"
-          />
-          <img 
-            src={boxesImg}
-            alt=""
-            className="floating-box-3 absolute bottom-[25%] left-[10%] w-24 opacity-50"
-          />
-        </div>
-        
-        {/* Content Layer */}
-        <div className="container mx-auto px-4 text-center relative z-20">
-          <div className="hero-content-fade max-w-4xl mx-auto">
-            <h1 className="text-h1 mb-6">
-              Turn Package Protection Into Profit
-            </h1>
-            <p className="text-body-lg mb-8 max-w-3xl mx-auto opacity-95">
-              PARCELIS gives your customers comprehensive shipping insurance while putting money back in your pocket. No claims hassles. No overhead. Just better margins.
-            </p>
-            <Button 
-              asChild 
-              variant="hero" 
-              size="lg" 
-              className="bg-background text-primary hover:bg-background/90 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
-            >
-              <Link to="/apply">Get Started</Link>
-            </Button>
+        {/* Two-Column Grid Layout */}
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+            
+            {/* Left Column - Text Content */}
+            <div className="hero-content-fade text-center md:text-left">
+              <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-6">
+                <span className="block text-foreground">Shipping Insurance.</span>
+                <span className="block text-primary mt-2">Powerful.</span>
+                <span className="block text-primary">Flexible.</span>
+                <span className="block text-primary">Profitable.</span>
+              </h1>
+              
+              <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-[500px] mx-auto md:mx-0">
+                PARCELIS gives your customers comprehensive protection while putting money back in your pocket.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 items-center md:items-start">
+                <Button 
+                  asChild 
+                  size="lg" 
+                  className="h-16 px-8 text-lg bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
+                >
+                  <Link to="/apply" className="flex items-center gap-2">
+                    Get Started
+                    <ChevronRight className="group-hover:translate-x-1 transition-transform" size={20} />
+                  </Link>
+                </Button>
+                
+                <Button asChild variant="ghost" size="lg" className="text-primary hover:text-primary/80">
+                  <Link to="/how-it-works">Learn more →</Link>
+                </Button>
+              </div>
+            </div>
+            
+            {/* Right Column - Visual Placeholder */}
+            <div className="hidden md:flex items-center justify-center relative">
+              <div className="relative w-full max-w-[450px] aspect-square">
+                {/* Package Icon Placeholder */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative">
+                    <Package className="w-48 h-48 text-primary/20 absolute blur-2xl" aria-hidden="true" />
+                    <Package className="w-48 h-48 text-primary relative z-10" aria-hidden="true" />
+                  </div>
+                </div>
+                
+                {/* Small floating accent elements */}
+                <div className="absolute top-10 right-10 w-16 h-16 bg-primary/10 rounded-lg transform rotate-12 floating-box-subtle" aria-hidden="true" />
+                <div className="absolute bottom-20 left-10 w-12 h-12 bg-primary/10 rounded-lg transform -rotate-6 floating-box-subtle" style={{ animationDelay: '0.5s' }} aria-hidden="true" />
+              </div>
+            </div>
+            
           </div>
         </div>
       </section>
