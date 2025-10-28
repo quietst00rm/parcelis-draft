@@ -99,13 +99,13 @@ const Navigation = () => {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 top-full z-40 bg-primary">
-          <div className="flex flex-col items-center justify-center h-full gap-8 px-4">
+        <div className="lg:hidden fixed left-0 right-0 top-[80px] bottom-0 z-40 bg-primary overflow-y-auto">
+          <div className="flex flex-col items-center justify-start h-full gap-8 px-4 py-12">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className="text-white text-3xl font-medium hover:text-primary-light-tint transition-colors"
+                className="text-white text-2xl font-medium hover:text-primary-light-tint transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.name}
