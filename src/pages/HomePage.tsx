@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Shield, DollarSign, Clock, Globe, ChevronRight, Package } from "lucide-react";
+import { Shield, DollarSign, Clock, Globe, ChevronRight } from "lucide-react";
 import hartfordLogo from "@/assets/logos/hartford.png";
 import uspsLogo from "@/assets/carriers/usps.png";
 import dhlLogo from "@/assets/carriers/dhl.png";
@@ -8,6 +8,7 @@ import upsLogo from "@/assets/carriers/ups.png";
 import fedexLogo from "@/assets/carriers/fedex.png";
 import shopifyLogo from "@/assets/platforms/shopify.png";
 import twentyNineNextLogo from "@/assets/platforms/29next.png";
+import heroShieldPackages from "@/assets/hero/shield-packages.png";
 
 const HomePage = () => {
   return (
@@ -58,20 +59,14 @@ const HomePage = () => {
               </div>
             </div>
             
-            {/* Right Column - Visual Placeholder */}
+            {/* Right Column - Hero Image */}
             <div className="hidden md:flex items-center justify-center relative">
-              <div className="relative w-full max-w-[450px] aspect-square">
-                {/* Package Icon Placeholder */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative">
-                    <Package className="w-48 h-48 text-primary/20 absolute blur-2xl" aria-hidden="true" />
-                    <Package className="w-48 h-48 text-primary relative z-10" aria-hidden="true" />
-                  </div>
-                </div>
-                
-                {/* Small floating accent elements */}
-                <div className="absolute top-10 right-10 w-16 h-16 bg-primary/10 rounded-lg transform rotate-12 floating-box-subtle" aria-hidden="true" />
-                <div className="absolute bottom-20 left-10 w-12 h-12 bg-primary/10 rounded-lg transform -rotate-6 floating-box-subtle" style={{ animationDelay: '0.5s' }} aria-hidden="true" />
+              <div className="relative w-full max-w-[500px]">
+                <img 
+                  src={heroShieldPackages} 
+                  alt="Shield protecting shipping packages with technology circuit board pattern"
+                  className="w-full h-auto drop-shadow-2xl"
+                />
               </div>
             </div>
             
