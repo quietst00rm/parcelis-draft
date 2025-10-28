@@ -41,7 +41,7 @@ const HomePage = () => {
   const costPercent = customerPrice > 0 ? ((profitTier.cost || 0) / customerPrice) * 100 : 50;
   const profitPercent = customerPrice > 0 ? (profit / customerPrice) * 100 : 50;
 
-  // Smooth scroll function
+  // Smooth scroll function and scroll animations
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const target = e.target as HTMLAnchorElement;
@@ -56,7 +56,30 @@ const HomePage = () => {
     };
 
     document.addEventListener('click', handleClick);
-    return () => document.removeEventListener('click', handleClick);
+
+    // Intersection Observer for scroll animations
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const animateOnScroll = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all fade-in elements
+    document.querySelectorAll('.fade-in-up').forEach(el => {
+      animateOnScroll.observe(el);
+    });
+
+    return () => {
+      document.removeEventListener('click', handleClick);
+      animateOnScroll.disconnect();
+    };
   }, []);
 
   return (
@@ -607,26 +630,143 @@ const HomePage = () => {
         </div>
       </section>
 
+      {/* Trust Section */}
+      <section className="trust-section">
+        <div className="trust-container">
+          <h2 className="trust-headline">Licensed. Legitimate. Reliable.</h2>
+          
+          <div className="trust-grid">
+            {/* Hartford Backing */}
+            <div className="trust-card fade-in-up">
+              <div className="trust-icon">
+                <Shield size={80} strokeWidth={1.5} />
+              </div>
+              <h3 className="trust-card-headline">Backed by The Hartford</h3>
+              <p className="trust-card-description">
+                200+ years of insurance expertise. Real underwriting, real coverage, real payouts.
+              </p>
+              <div className="trust-badge">Licensed Reinsurance Provider</div>
+            </div>
+            
+            {/* Compliance */}
+            <div className="trust-card fade-in-up">
+              <div className="trust-icon">
+                <Award size={80} strokeWidth={1.5} />
+              </div>
+              <h3 className="trust-card-headline">Regulatory Compliance</h3>
+              <p className="trust-card-description">
+                Not a tech workaround. Licensed in all operating states. Full DOI oversight.
+              </p>
+              <div className="trust-badge">State-Regulated Coverage</div>
+            </div>
+            
+            {/* Speed */}
+            <div className="trust-card fade-in-up">
+              <div className="trust-icon">
+                <Clock size={80} strokeWidth={1.5} />
+              </div>
+              <h3 className="trust-card-headline">5-7 Day Claims</h3>
+              <p className="trust-card-description">
+                Faster than carriers. Professional claim adjusters. Zero merchant involvement.
+              </p>
+              <div className="trust-badge">Industry-Leading Speed</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Coverage Section */}
+      <section className="coverage-section">
+        <div className="coverage-split">
+          <div className="coverage-left">
+            <h2 className="coverage-headline">Comprehensive Protection</h2>
+            
+            <ul className="coverage-list">
+              <li className="coverage-item">
+                <div className="check-icon">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="15" fill="currentColor" opacity="0.1"/>
+                    <path d="M9 16L14 21L23 12" stroke="currentColor" strokeWidth="2" 
+                          strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <span>Lost Packages</span>
+              </li>
+              <li className="coverage-item">
+                <div className="check-icon">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="15" fill="currentColor" opacity="0.1"/>
+                    <path d="M9 16L14 21L23 12" stroke="currentColor" strokeWidth="2" 
+                          strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <span>Damaged Shipments</span>
+              </li>
+              <li className="coverage-item">
+                <div className="check-icon">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="15" fill="currentColor" opacity="0.1"/>
+                    <path d="M9 16L14 21L23 12" stroke="currentColor" strokeWidth="2" 
+                          strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <span>Porch Piracy</span>
+              </li>
+              <li className="coverage-item">
+                <div className="check-icon">
+                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <circle cx="16" cy="16" r="15" fill="currentColor" opacity="0.1"/>
+                    <path d="M9 16L14 21L23 12" stroke="currentColor" strokeWidth="2" 
+                          strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+                <span>All Global Carriers</span>
+              </li>
+            </ul>
+            
+            <div className="coverage-limits">
+              <div className="limit-card">
+                <div className="limit-label">Per Box</div>
+                <div className="limit-value">$2,500</div>
+              </div>
+              <div className="limit-card">
+                <div className="limit-label">Per Shipment</div>
+                <div className="limit-value">$25,000</div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="coverage-right">
+            <div className="resolution-display">
+              <div className="resolution-number">5-7</div>
+              <div className="resolution-unit">Business Days</div>
+              <div className="resolution-label">Average claim resolution</div>
+              <div className="resolution-comparison">Carrier insurance: 30-60 days</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* How It Works Summary */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6 lg:px-12">
           <h2 className="heading-2 text-center mb-16" style={{ color: 'hsl(238 69% 36%)' }}>Simple Process, Zero Hassle</h2>
           <div className="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
-            <div className="text-center">
+            <div className="text-center fade-in-up">
               <div className="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 text-white" style={{ background: 'var(--gradient-primary)' }}>
                 1
               </div>
               <h3 className="text-2xl font-bold mb-4" style={{ color: 'hsl(238 69% 36%)' }}>Integrate</h3>
               <p className="text-lg" style={{ color: 'hsl(215 16% 47%)' }}>Connect via Shopify app or platform integration</p>
             </div>
-            <div className="text-center">
+            <div className="text-center fade-in-up">
               <div className="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 text-white" style={{ background: 'var(--gradient-primary)' }}>
                 2
               </div>
               <h3 className="text-2xl font-bold mb-4" style={{ color: 'hsl(238 69% 36%)' }}>Sell</h3>
               <p className="text-lg" style={{ color: 'hsl(215 16% 47%)' }}>Insurance option appears at checkout - customers opt in</p>
             </div>
-            <div className="text-center">
+            <div className="text-center fade-in-up">
               <div className="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 text-white" style={{ background: 'var(--gradient-primary)' }}>
                 3
               </div>
@@ -666,17 +806,36 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-24 bg-primary-dark text-white">
-        <div className="container mx-auto px-6 lg:px-12 text-center">
-          <h2 className="heading-2 text-white mb-4">Ready to Protect Packages and Boost Profits?</h2>
-          <p className="text-xl text-white/90 mb-12 max-w-2xl mx-auto">
-            Join thousands of merchants turning package protection into profit
-          </p>
-          <Link to="/apply" className="btn btn-large inline-flex items-center gap-2 bg-white hover:bg-white/90" style={{ color: 'hsl(238 69% 36%)' }}>
-            Apply Now
-            <ChevronRight size={20} />
-          </Link>
+      {/* Final CTA Section */}
+      <section className="final-cta-section">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="final-cta-content">
+            <h2 className="final-cta-headline">Ready to Turn Protection Into Profit?</h2>
+            <p className="final-cta-subheadline">
+              Join the merchants who've chosen the smarter way to protect shipments.
+            </p>
+            
+            <div className="final-cta-buttons">
+              <a href="#calculator" className="btn btn-primary btn-large">
+                Calculate Your Profit
+              </a>
+              <Link to="/apply" className="btn btn-secondary btn-large">
+                Apply Now
+              </Link>
+            </div>
+            
+            <div className="final-trust-badges">
+              <div className="trust-item">
+                <Shield className="text-primary" size={24} />
+              </div>
+              <div className="trust-item">
+                <span className="trust-badge-text">Licensed Reinsurance Provider</span>
+              </div>
+              <div className="trust-item">
+                <span className="trust-badge-text">200+ Years Combined Experience</span>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>

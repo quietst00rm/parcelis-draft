@@ -1,74 +1,60 @@
 import { Link } from "react-router-dom";
+import { Shield } from "lucide-react";
 import logoWhite from "@/assets/logo-white.png";
 
 const Footer = () => {
   return (
-    <footer className="bg-primary-dark border-t border-primary-medium">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <img src={logoWhite} alt="PARCELIS" className="h-8 mb-4" />
-            <p className="text-sm text-primary-foreground/80">
-              Merchant-first shipping insurance with comprehensive coverage.
+    <footer className="site-footer">
+      <div className="footer-container">
+        <div className="footer-main">
+          {/* Brand Column */}
+          <div className="footer-column footer-brand">
+            <img src={logoWhite} alt="PARCELIS" className="footer-logo" />
+            <p className="footer-tagline">
+              Turn package protection into profit. Zero hassle. Real insurance.
             </p>
           </div>
-
-          <div>
-            <h3 className="font-semibold mb-4 text-primary-foreground">Company</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/about" className="text-sm text-primary-foreground/70 hover:text-primary-light-tint transition-colors">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link to="/how-it-works" className="text-sm text-primary-foreground/70 hover:text-primary-light-tint transition-colors">
-                  How It Works
-                </Link>
-              </li>
-              <li>
-                <Link to="/pricing" className="text-sm text-primary-foreground/70 hover:text-primary-light-tint transition-colors">
-                  Pricing
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-sm text-primary-foreground/70 hover:text-primary-light-tint transition-colors">
-                  Contact
-                </Link>
-              </li>
+          
+          {/* Product Column */}
+          <div className="footer-column">
+            <h4 className="footer-heading">Product</h4>
+            <ul className="footer-links">
+              <li><a href="/#how-it-works">How It Works</a></li>
+              <li><a href="/#pricing">Pricing</a></li>
+              <li><a href="/#platforms">Platforms</a></li>
+              <li><a href="/#calculator">Calculator</a></li>
             </ul>
           </div>
-
-          <div>
-            <h3 className="font-semibold mb-4 text-primary-foreground">Legal</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/privacy" className="text-sm text-primary-foreground/70 hover:text-primary-light-tint transition-colors">
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/terms" className="text-sm text-primary-foreground/70 hover:text-primary-light-tint transition-colors">
-                  Terms of Use
-                </Link>
-              </li>
+          
+          {/* Company Column */}
+          <div className="footer-column">
+            <h4 className="footer-heading">Company</h4>
+            <ul className="footer-links">
+              <li><Link to="/about">About</Link></li>
+              <li><Link to="/contact">Contact</Link></li>
+              <li><Link to="/apply">Apply Now</Link></li>
             </ul>
           </div>
-
-          <div>
-            <h3 className="font-semibold mb-4 text-primary-foreground">Contact</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="mailto:support@parcelis.com" className="text-sm text-primary-foreground/70 hover:text-primary-light-tint transition-colors">
-                  support@parcelis.com
-                </a>
-              </li>
+          
+          {/* Legal Column */}
+          <div className="footer-column">
+            <h4 className="footer-heading">Legal</h4>
+            <ul className="footer-links">
+              <li><Link to="/privacy">Privacy Policy</Link></li>
+              <li><Link to="/terms">Terms of Use</Link></li>
             </ul>
           </div>
         </div>
-
-        <div className="mt-8 pt-8 border-t border-primary-medium text-center text-sm text-primary-foreground/70">
-          <p>© 2025 PARCELIS. All rights reserved.</p>
+        
+        <div className="footer-bottom">
+          <div className="footer-copyright">
+            © 2025 PARCELIS. All rights reserved.
+          </div>
+          <div className="footer-partner">
+            <span>Underwritten by</span>
+            <Shield size={20} className="partner-logo" />
+            <span className="font-semibold">The Hartford</span>
+          </div>
         </div>
       </div>
     </footer>
