@@ -121,7 +121,7 @@ const HomePage = () => {
           aria-hidden="true"
         />
         
-        <div className="container mx-auto px-6 lg:px-12 relative z-10 pt-32 pb-16">
+        <div className="container mx-auto px-6 lg:px-12 relative z-10 pt-24 pb-16">
           <div className="max-w-4xl mx-auto text-center">
             {/* Trust Badge with Hartford */}
             <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/15 backdrop-blur-md rounded-full border border-white/30 mb-8 shadow-lg">

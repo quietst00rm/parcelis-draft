@@ -4,7 +4,7 @@ import HomePage from "./HomePage";
 
 const Index = () => {
   return (
-    <div className="mt-20">
+    <div>
       <Navigation />
       <HomePage />
       <Footer />
