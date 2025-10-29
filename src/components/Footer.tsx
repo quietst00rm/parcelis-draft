@@ -31,24 +31,14 @@ const Footer = () => {
             <h4 className="text-sm font-bold uppercase tracking-wider mb-6">Product</h4>
             <ul className="space-y-4">
               <li>
-                <a href="/#how-it-works" className="text-base text-white/70 hover:text-white transition-colors inline-block">
+                <Link to="/how-it-works" className="text-base text-white/70 hover:text-white transition-colors inline-block" onClick={() => window.scrollTo(0, 0)}>
                   How It Works
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/#pricing" className="text-base text-white/70 hover:text-white transition-colors inline-block">
+                <Link to="/pricing" className="text-base text-white/70 hover:text-white transition-colors inline-block" onClick={() => window.scrollTo(0, 0)}>
                   Pricing
-                </a>
-              </li>
-              <li>
-                <a href="/#platforms" className="text-base text-white/70 hover:text-white transition-colors inline-block">
-                  Platforms
-                </a>
-              </li>
-              <li>
-                <a href="/#calculator" className="text-base text-white/70 hover:text-white transition-colors inline-block">
-                  Calculator
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -58,17 +48,17 @@ const Footer = () => {
             <h4 className="text-sm font-bold uppercase tracking-wider mb-6">Company</h4>
             <ul className="space-y-4">
               <li>
-                <Link to="/about" className="text-base text-white/70 hover:text-white transition-colors inline-block">
+                <Link to="/about" className="text-base text-white/70 hover:text-white transition-colors inline-block" onClick={() => window.scrollTo(0, 0)}>
                   About
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-base text-white/70 hover:text-white transition-colors inline-block">
+                <Link to="/contact" className="text-base text-white/70 hover:text-white transition-colors inline-block" onClick={() => window.scrollTo(0, 0)}>
                   Contact
                 </Link>
               </li>
               <li>
-                <Link to="/apply" className="text-base text-white/70 hover:text-white transition-colors inline-block">
+                <Link to="/apply" className="text-base text-white/70 hover:text-white transition-colors inline-block" onClick={() => window.scrollTo(0, 0)}>
                   Apply Now
                 </Link>
               </li>

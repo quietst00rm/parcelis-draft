@@ -66,6 +66,7 @@ const Navigation = () => {
                 key={link.path}
                 to={link.path}
                 className={`text-base font-medium transition-colors duration-200 relative ${textColor} hover:text-primary nav-link-animated`}
+                onClick={() => window.scrollTo(0, 0)}
               >
                 {link.name}
               </Link>
@@ -118,7 +119,10 @@ const Navigation = () => {
               key={link.path}
               to={link.path}
               className="text-white text-2xl font-medium hover:opacity-80 transition-opacity"
-              onClick={() => setMobileMenuOpen(false)}
+              onClick={() => {
+                setMobileMenuOpen(false);
+                window.scrollTo(0, 0);
+              }}
             >
               {link.name}
             </Link>
@@ -127,8 +131,11 @@ const Navigation = () => {
           {/* Apply Button */}
           <Link 
             to="/apply" 
-            className="btn btn-primary mt-4 bg-white text-primary hover:bg-white/90 px-8 py-3"
-            onClick={() => setMobileMenuOpen(false)}
+            className="btn btn-primary mt-4 bg-white text-primary hover:bg-white/90 px-8 py-3 font-semibold"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              window.scrollTo(0, 0);
+            }}
           >
             Apply Now
           </Link>
