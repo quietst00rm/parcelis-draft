@@ -125,8 +125,14 @@ const HomePage = () => {
           aria-hidden="true"
         />
 
-        <div className="container mx-auto px-6 lg:px-12 relative z-10 pt-12 pb-24">
+        <div className="container mx-auto px-6 lg:px-12 relative z-10 pt-24 pb-16">
           <div className="max-w-4xl mx-auto text-center">
+            {/* Trust Badge with Hartford */}
+            <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/15 backdrop-blur-md rounded-full border border-white/30 mb-8 shadow-lg">
+              <Shield className="text-green-400" size={24} />
+              <span className="text-white text-sm font-semibold">Underwritten by The Hartford</span>
+            </div>
+
             {/* Hero Headline */}
             <h1 className="mb-6 hero-content-fade">
               <span className="block text-3xl md:text-5xl lg:text-6xl font-medium text-white/90 mb-3">
@@ -142,7 +148,7 @@ const HomePage = () => {
             </p>
 
             {/* Hero CTAs */}
-            <div className="flex flex-col sm:flex-row gap-5 items-center justify-center mb-8">
+            <div className="flex flex-col sm:flex-row gap-5 items-center justify-center mb-12">
               <a href="#calculator" className="btn btn-primary btn-large inline-flex items-center gap-2 shadow-2xl">
                 Calculate Your Profit
                 <ChevronRight size={20} />
@@ -153,12 +159,6 @@ const HomePage = () => {
               >
                 Apply Now
               </Link>
-            </div>
-
-            {/* Trust Badge with Hartford */}
-            <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/15 backdrop-blur-md rounded-full border border-white/30 shadow-lg">
-              <Shield className="text-green-400" size={24} />
-              <span className="text-white text-sm font-semibold">Underwritten by The Hartford</span>
             </div>
           </div>
         </div>
