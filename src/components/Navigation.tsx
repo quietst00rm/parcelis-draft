@@ -131,13 +131,14 @@ const Navigation = () => {
           {/* Apply Button */}
           <Link 
             to="/apply" 
-            className="btn btn-primary mt-4 bg-white text-primary hover:bg-white/90 px-8 py-3 font-semibold"
+            className="mt-4 bg-white text-primary hover:bg-white/95 px-10 py-4 rounded-lg font-semibold text-lg transition-all shadow-lg hover:shadow-xl inline-flex items-center gap-2"
             onClick={() => {
               setMobileMenuOpen(false);
               window.scrollTo(0, 0);
             }}
           >
             Apply Now
+            <ChevronRight size={20} />
           </Link>
         </nav>
       </div>
