@@ -127,10 +127,10 @@ const HomePage = () => {
 
         <div className="container mx-auto px-6 lg:px-12 relative z-10 pt-24 pb-16">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Trust Badge with Hartford */}
+            {/* Trust Badge */}
             <div className="inline-flex items-center gap-3 px-6 py-3 bg-white/15 backdrop-blur-md rounded-full border border-white/30 mb-8 shadow-lg">
               <Shield className="text-green-400" size={24} />
-              <span className="text-white text-sm font-semibold">Underwritten by The Hartford</span>
+              <span className="text-white text-sm font-semibold">Powered by InsureShip</span>
             </div>
 
             {/* Hero Headline */}
@@ -765,14 +765,14 @@ const HomePage = () => {
           <h2 className="trust-headline">Licensed. Legitimate. Reliable.</h2>
 
           <div className="trust-grid">
-            {/* Hartford Backing */}
+            {/* InsureShip Backing */}
             <div className="trust-card fade-in-up">
               <div className="trust-icon">
                 <Shield size={80} strokeWidth={1.5} />
               </div>
-              <h3 className="trust-card-headline">Backed by The Hartford</h3>
+              <h3 className="trust-card-headline">Powered by InsureShip</h3>
               <p className="trust-card-description">
-                200+ years of insurance expertise. Real underwriting, real coverage, real payouts.
+                Industry-leading insurance infrastructure. Real underwriting, real coverage, real payouts.
               </p>
               <div className="trust-badge">Licensed Reinsurance Provider</div>
             </div>
