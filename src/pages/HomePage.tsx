@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Shield, DollarSign, Clock, TrendingUp, Users, Award, ChevronRight, Code, Package } from "lucide-react";
+import { Shield, Clock, Users, Award, ChevronRight, Code, CheckCircle, Zap, TrendingUp, Smile } from "lucide-react";
 import { useCounter } from "@/hooks/use-counter";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
-import { GlassmorphicCard } from "@/components/ui/glassmorphic-card";
 import uspsLogo from "@/assets/carriers/usps.png";
 import dhlLogo from "@/assets/carriers/dhl.png";
 import upsLogo from "@/assets/carriers/ups.png";
@@ -12,11 +11,6 @@ import shopifyLogo from "@/assets/platforms/shopify.png";
 import twentyNineNextLogo from "@/assets/platforms/29next.png";
 
 const HomePage = () => {
-  const [activeTab, setActiveTab] = useState<"basic" | "profit">("basic");
-  const [basicValue, setBasicValue] = useState(150);
-  const [profitValue, setProfitValue] = useState(150);
-  const [customerPrice, setCustomerPrice] = useState(4.99);
-  const [volume, setVolume] = useState(100);
   const [statsVisible, setStatsVisible] = useState(false);
 
   // Animated counters for stats
@@ -24,47 +18,8 @@ const HomePage = () => {
   const merchantsCount = useCounter(statsVisible ? 10000 : 0, 2000);
   const satisfactionCount = useCounter(statsVisible ? 99 : 0, 2000);
 
-  // Pricing calculation logic
-  const calculateBaseCost = (value: number) => {
-    if (value <= 49) return { cost: 0, description: "Below minimum coverage" };
-    if (value <= 200) return { cost: 2.5, description: "For packages valued $50-$200" };
-    if (value <= 400) return { cost: 5.0, description: "For packages valued $201-$400" };
-    if (value <= 600) return { cost: 7.5, description: "For packages valued $401-$600" };
-    if (value <= 800) return { cost: 10.0, description: "For packages valued $601-$800" };
-    return { cost: null, description: "Contact us for custom quote" };
-  };
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    }).format(amount);
-  };
-
-  const basicTier = calculateBaseCost(basicValue);
-  const profitTier = calculateBaseCost(profitValue);
-  const profit = Math.max(0, customerPrice - (profitTier.cost || 0));
-  const annualProfit = profit * volume * 12;
-  const costPercent = customerPrice > 0 ? ((profitTier.cost || 0) / customerPrice) * 100 : 50;
-  const profitPercent = customerPrice > 0 ? (profit / customerPrice) * 100 : 50;
-
-  // Smooth scroll function and scroll animations
+  // Scroll animations
   useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      const target = e.target as HTMLAnchorElement;
-      if (target.tagName === "A" && target.getAttribute("href")?.startsWith("#")) {
-        e.preventDefault();
-        const id = target.getAttribute("href")?.slice(1);
-        const element = document.getElementById(id || "");
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }
-    };
-
-    document.addEventListener("click", handleClick);
 
     // Intersection Observer for scroll animations
     const observerOptions = {
@@ -90,7 +45,6 @@ const HomePage = () => {
     });
 
     return () => {
-      document.removeEventListener("click", handleClick);
       animateOnScroll.disconnect();
     };
   }, []);
@@ -135,29 +89,33 @@ const HomePage = () => {
 
             {/* Hero Headline */}
             <h1 className="mb-6 hero-content-fade">
-              <span className="block text-3xl md:text-5xl lg:text-6xl font-medium text-white/90 mb-3">
-                Zero-Hassle Claims Management
-              </span>
-              <span className="block text-5xl md:text-7xl lg:text-[96px] text-white font-bold leading-none tracking-tight hero-headline-bottom">
-                THAT PAYS YOU
+              <span className="block text-5xl md:text-7xl lg:text-[96px] text-white font-bold leading-none tracking-tight hero-headline-bottom mb-6">
+                Deliver Confidence with Every Shipment.
               </span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-white/90 mb-14 max-w-2xl mx-auto leading-relaxed font-medium">
-              Never touch a claim. Earn from every package. Real insurance protection.
+            <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
+              A tech-enabled package protection platform that keeps customers happy, support teams unburdened, and your brand reputation intact — powered by InsureShip.
+            </p>
+
+            <p className="text-lg md:text-xl text-white/80 mb-14 max-w-3xl mx-auto leading-relaxed">
+              Parcelis automatically adds protection against loss, damage, and theft at checkout. Customers feel secure knowing their order is covered, while you reduce post-purchase claims, minimize refunds, and eliminate manual handling. Fast resolutions. Fewer support tickets. Happier customers.
             </p>
 
             {/* Hero CTAs */}
             <div className="flex flex-col sm:flex-row gap-5 items-center justify-center mb-12">
-              <a href="#calculator" className="btn btn-primary btn-large inline-flex items-center gap-2 shadow-2xl">
-                Calculate Your Profit
-                <ChevronRight size={20} />
-              </a>
               <Link
                 to="/apply"
+                className="btn btn-primary btn-large inline-flex items-center gap-2 shadow-2xl"
+              >
+                Protect Your Customers Today
+                <ChevronRight size={20} />
+              </Link>
+              <Link
+                to="/how-it-works"
                 className="btn btn-secondary btn-large text-white border-2 border-white hover:bg-white hover:text-primary transition-all"
               >
-                Apply Now
+                See How It Works
               </Link>
             </div>
           </div>
@@ -200,8 +158,8 @@ const HomePage = () => {
       {/* Value Propositions */}
       <section className="py-24 bg-[#f8f9fe]">
         <div className="container mx-auto px-6 lg:px-12">
-          <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {/* Save Time - Zero Hassle (FIRST) */}
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Save Time - Zero Hassle */}
             <div
               className="fade-in-up relative bg-white rounded-xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border-l-4 value-prop-card"
               style={{ borderColor: "hsl(238 69% 36%)" }}
@@ -228,34 +186,7 @@ const HomePage = () => {
               </p>
             </div>
 
-            {/* Make Money (SECOND) */}
-            <div
-              className="fade-in-up relative bg-white rounded-xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border-l-4 value-prop-card"
-              style={{ borderColor: "hsl(163 100% 43%)" }}
-            >
-              <div className="mb-6">
-                <DollarSign className="w-16 h-16 text-primary" />
-              </div>
-
-              <h3 className="text-3xl font-bold mb-4" style={{ color: "hsl(238 69% 36%)" }}>
-                Generate Revenue
-              </h3>
-
-              <div className="mb-4">
-                <div className="text-5xl font-bold" style={{ color: "hsl(163 100% 43%)" }}>
-                  $2.49+
-                </div>
-                <div className="text-base font-medium" style={{ color: "hsl(215 16% 47%)" }}>
-                  profit per package
-                </div>
-              </div>
-
-              <p className="text-lg leading-relaxed" style={{ color: "hsl(215 16% 47%)" }}>
-                Set your markup and turn package protection into a profit center. No overhead, pure margin.
-              </p>
-            </div>
-
-            {/* Protect Customers (THIRD) */}
+            {/* Protect Customers */}
             <div
               className="fade-in-up relative bg-white rounded-xl p-8 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border-l-4 value-prop-card"
               style={{ borderColor: "hsl(238 63% 58%)" }}
@@ -285,314 +216,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Calculator Section */}
-      <section
-        id="calculator"
-        className="py-24 bg-gradient-to-b from-white to-[#e8e9f9] min-h-screen flex items-center"
-      >
-        <div className="container mx-auto px-6 lg:px-12">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="heading-2 mb-4" style={{ color: "hsl(238 69% 36%)" }}>
-                See Your Profit Potential
-              </h2>
-              <p className="text-xl" style={{ color: "hsl(215 16% 47%)" }}>
-                Real numbers. Real profit.
-              </p>
-            </div>
-
-            {/* Calculator Tabs */}
-            <div className="flex gap-2 border-b-2 mb-8" style={{ borderColor: "hsl(214 15% 66%)" }}>
-              <button
-                onClick={() => setActiveTab("basic")}
-                className={`px-8 py-4 text-lg font-semibold transition-all duration-200 relative -bottom-0.5 ${
-                  activeTab === "basic" ? "border-b-3" : "text-gray-500 hover:text-gray-700"
-                }`}
-                style={
-                  activeTab === "basic"
-                    ? {
-                        color: "hsl(238 69% 36%)",
-                        borderBottom: "3px solid hsl(238 69% 36%)",
-                      }
-                    : {}
-                }
-              >
-                Basic Cost
-              </button>
-              <button
-                onClick={() => setActiveTab("profit")}
-                className={`px-8 py-4 text-lg font-semibold transition-all duration-200 relative -bottom-0.5 ${
-                  activeTab === "profit" ? "border-b-3" : "text-gray-500 hover:text-gray-700"
-                }`}
-                style={
-                  activeTab === "profit"
-                    ? {
-                        color: "hsl(238 69% 36%)",
-                        borderBottom: "3px solid hsl(238 69% 36%)",
-                      }
-                    : {}
-                }
-              >
-                Profit Calculator
-              </button>
-            </div>
-
-            {/* Calculator Panels with Glassmorphism */}
-            <GlassmorphicCard className="p-8 lg:p-12 min-h-[500px]">
-              {/* Basic Cost Panel */}
-              {activeTab === "basic" && (
-                <div className="space-y-8 animate-fade-in">
-                  <div>
-                    <label
-                      className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider mb-3"
-                      style={{ color: "hsl(227 33% 16%)" }}
-                    >
-                      <Package size={16} className="text-primary" />
-                      Package Value
-                    </label>
-                    <div className="relative mb-4">
-                      <span
-                        className="absolute left-6 top-1/2 -translate-y-1/2 text-2xl font-semibold"
-                        style={{ color: "hsl(215 16% 47%)" }}
-                      >
-                        $
-                      </span>
-                      <input
-                        type="number"
-                        value={basicValue}
-                        onChange={(e) => setBasicValue(Number(e.target.value))}
-                        className="w-full pl-12 pr-6 py-4 text-3xl font-semibold border-2 rounded-lg transition-all duration-200 focus:outline-none calc-input backdrop-blur-sm"
-                        style={{
-                          borderColor: "hsl(214 15% 66%)",
-                          color: "hsl(227 33% 16%)",
-                          background: "rgba(255, 255, 255, 0.7)",
-                        }}
-                        onFocus={(e) => {
-                          e.target.style.borderColor = "hsl(238 69% 36%)";
-                          e.target.style.boxShadow = "0 0 0 3px hsla(238 69% 36% / 0.15)";
-                        }}
-                        onBlur={(e) => {
-                          e.target.style.borderColor = "hsl(214 15% 66%)";
-                          e.target.style.boxShadow = "none";
-                        }}
-                      />
-                    </div>
-                    <input
-                      type="range"
-                      min="0"
-                      max="1000"
-                      step="10"
-                      value={basicValue}
-                      onChange={(e) => setBasicValue(Number(e.target.value))}
-                      className="w-full h-2 rounded-full appearance-none cursor-pointer calc-slider"
-                      style={{
-                        background: "hsl(214 15% 66%)",
-                      }}
-                    />
-                  </div>
-
-                  <div
-                    className="bg-white/70 backdrop-blur-md rounded-xl p-8 border-2 shadow-lg"
-                    style={{ borderColor: "hsl(238 69% 36%)" }}
-                  >
-                    <div
-                      className="text-base font-semibold uppercase tracking-wider mb-2"
-                      style={{ color: "hsl(215 16% 47%)" }}
-                    >
-                      Your Base Cost
-                    </div>
-                    <div className="text-6xl font-bold mb-2 result-value" style={{ color: "hsl(238 69% 36%)" }}>
-                      {basicTier.cost === null
-                        ? "Custom Quote"
-                        : basicTier.cost === 0
-                          ? "N/A"
-                          : formatCurrency(basicTier.cost)}
-                    </div>
-                    <div className="text-base" style={{ color: "hsl(215 16% 47%)" }}>
-                      {basicTier.description}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Profit Calculator Panel */}
-              {activeTab === "profit" && (
-                <div className="space-y-8 animate-fade-in">
-                  <div>
-                    <label
-                      className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider mb-3"
-                      style={{ color: "hsl(227 33% 16%)" }}
-                    >
-                      <Package size={16} className="text-primary" />
-                      Package Value
-                    </label>
-                    <div className="relative mb-4">
-                      <span
-                        className="absolute left-6 top-1/2 -translate-y-1/2 text-2xl font-semibold"
-                        style={{ color: "hsl(215 16% 47%)" }}
-                      >
-                        $
-                      </span>
-                      <input
-                        type="number"
-                        value={profitValue}
-                        onChange={(e) => setProfitValue(Number(e.target.value))}
-                        className="w-full pl-12 pr-6 py-4 text-3xl font-semibold border-2 rounded-lg transition-all duration-200 focus:outline-none calc-input backdrop-blur-sm"
-                        style={{
-                          borderColor: "hsl(214 15% 66%)",
-                          color: "hsl(227 33% 16%)",
-                          background: "rgba(255, 255, 255, 0.7)",
-                        }}
-                        onFocus={(e) => {
-                          e.target.style.borderColor = "hsl(238 69% 36%)";
-                          e.target.style.boxShadow = "0 0 0 3px hsla(238 69% 36% / 0.15)";
-                        }}
-                        onBlur={(e) => {
-                          e.target.style.borderColor = "hsl(214 15% 66%)";
-                          e.target.style.boxShadow = "none";
-                        }}
-                      />
-                    </div>
-                    <input
-                      type="range"
-                      min="0"
-                      max="1000"
-                      step="10"
-                      value={profitValue}
-                      onChange={(e) => setProfitValue(Number(e.target.value))}
-                      className="w-full h-2 rounded-full appearance-none cursor-pointer calc-slider mb-2"
-                      style={{ background: "hsl(214 15% 66%)" }}
-                    />
-                    <div className="text-sm" style={{ color: "hsl(215 16% 47%)" }}>
-                      Your base cost:{" "}
-                      <strong style={{ color: "hsl(238 69% 36%)" }}>
-                        {profitTier.cost === null ? "Custom" : formatCurrency(profitTier.cost || 0)}
-                      </strong>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label
-                      className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider mb-3"
-                      style={{ color: "hsl(227 33% 16%)" }}
-                    >
-                      <DollarSign size={16} className="text-primary" />
-                      Your Customer Price
-                    </label>
-                    <div className="relative mb-4">
-                      <span
-                        className="absolute left-6 top-1/2 -translate-y-1/2 text-2xl font-semibold"
-                        style={{ color: "hsl(215 16% 47%)" }}
-                      >
-                        $
-                      </span>
-                      <input
-                        type="number"
-                        step="0.01"
-                        value={customerPrice}
-                        onChange={(e) => setCustomerPrice(Number(e.target.value))}
-                        className="w-full pl-12 pr-6 py-4 text-3xl font-semibold border-2 rounded-lg transition-all duration-200 focus:outline-none calc-input backdrop-blur-sm"
-                        style={{
-                          borderColor: "hsl(214 15% 66%)",
-                          color: "hsl(227 33% 16%)",
-                          background: "rgba(255, 255, 255, 0.7)",
-                        }}
-                        onFocus={(e) => {
-                          e.target.style.borderColor = "hsl(238 69% 36%)";
-                          e.target.style.boxShadow = "0 0 0 3px hsla(238 69% 36% / 0.15)";
-                        }}
-                        onBlur={(e) => {
-                          e.target.style.borderColor = "hsl(214 15% 66%)";
-                          e.target.style.boxShadow = "none";
-                        }}
-                      />
-                    </div>
-                    <input
-                      type="range"
-                      min="0"
-                      max="20"
-                      step="0.50"
-                      value={customerPrice}
-                      onChange={(e) => setCustomerPrice(Number(e.target.value))}
-                      className="w-full h-2 rounded-full appearance-none cursor-pointer calc-slider"
-                      style={{ background: "hsl(214 15% 66%)" }}
-                    />
-                  </div>
-
-                  <div
-                    className="bg-white/70 backdrop-blur-md rounded-xl p-8 border-2 shadow-lg"
-                    style={{ borderColor: "hsl(163 100% 43%)", boxShadow: "0 8px 24px hsla(163 100% 43% / 0.2)" }}
-                  >
-                    <div className="space-y-3 mb-6">
-                      <div className="flex justify-between text-lg">
-                        <span>Customer Pays:</span>
-                        <span className="font-semibold font-mono">{formatCurrency(customerPrice)}</span>
-                      </div>
-                      <div className="flex justify-between text-lg">
-                        <span>Your Cost:</span>
-                        <span className="font-semibold font-mono">{formatCurrency(profitTier.cost || 0)}</span>
-                      </div>
-                      <div className="h-0.5" style={{ background: "hsl(214 15% 66%)" }} />
-                      <div className="flex justify-between text-xl font-bold">
-                        <span>Your Profit:</span>
-                        <span className="text-3xl result-value" style={{ color: "hsl(163 100% 43%)" }}>
-                          {formatCurrency(profit)}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="mb-6">
-                      <div className="flex h-16 rounded-lg overflow-hidden">
-                        <div
-                          className="flex items-center justify-center text-white font-semibold text-sm transition-all duration-400"
-                          style={{
-                            width: `${costPercent}%`,
-                            background: "linear-gradient(135deg, hsl(238 69% 36%) 0%, hsl(238 63% 58%) 100%)",
-                          }}
-                        >
-                          Cost
-                        </div>
-                        <div
-                          className="flex items-center justify-center text-white font-semibold text-sm transition-all duration-400"
-                          style={{
-                            width: `${profitPercent}%`,
-                            background: "hsl(163 100% 43%)",
-                          }}
-                        >
-                          Profit
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-2 text-base flex-wrap" style={{ color: "hsl(215 16% 47%)" }}>
-                      At
-                      <input
-                        type="number"
-                        value={volume}
-                        onChange={(e) => setVolume(Number(e.target.value))}
-                        className="w-20 px-2 py-1 text-base font-semibold text-center border rounded volume-input"
-                        style={{ borderColor: "hsl(214 15% 66%)" }}
-                      />
-                      packages/month:
-                      <strong className="text-2xl" style={{ color: "hsl(163 100% 43%)" }}>
-                        {formatCurrency(annualProfit)}/year
-                      </strong>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </GlassmorphicCard>
-
-            <div className="text-center mt-12">
-              <Link to="/apply" className="btn btn-primary btn-large inline-flex items-center gap-2">
-                Start Earning with PARCELIS
-                <ChevronRight size={20} />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Social Proof & Platforms */}
       <section className="py-24 bg-gradient-to-br from-[#1e2099] to-[#2a2fb5] text-white">
         <div className="container mx-auto px-6 lg:px-12">
@@ -612,8 +235,7 @@ const HomePage = () => {
             </svg>
 
             <p className="text-2xl md:text-3xl font-normal text-white leading-relaxed mb-8">
-              PARCELIS added $1,200 per month in pure profit with zero effort on our end. The calculator sold us
-              immediately—we could see the exact ROI before even applying.
+              Our customer service team used to spend hours dealing with lost package claims. Now with PARCELIS, those issues are handled automatically and our customers are happier than ever.
             </p>
 
             <div className="flex items-center gap-6 flex-wrap">
@@ -622,14 +244,6 @@ const HomePage = () => {
                 <div className="text-xl font-bold text-white">Sarah Chen</div>
                 <div className="text-base text-white/80">Founder & CEO</div>
                 <div className="text-base text-white/80">ModernGoods</div>
-              </div>
-              <div className="ml-auto">
-                <span
-                  className="inline-block px-6 py-3 rounded-full font-bold text-lg text-white"
-                  style={{ background: "hsl(163 100% 43%)" }}
-                >
-                  +$1,200/mo profit
-                </span>
               </div>
             </div>
           </div>
@@ -755,6 +369,84 @@ const HomePage = () => {
                 <div className="text-sm text-white/70 text-center">RESTful API</div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-24 bg-white">
+        <div className="container mx-auto px-6 lg:px-12">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="heading-2 mb-4" style={{ color: "hsl(238 69% 36%)" }}>
+              Protection That Builds Trust. Automation That Saves Time.
+            </h2>
+            <p className="text-xl" style={{ color: "hsl(215 16% 47%)" }}>
+              From checkout to claim resolution, Parcelis ensures a smooth, worry-free experience for both merchants and customers.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-12">
+            {/* Comprehensive Coverage */}
+            <div className="fade-in-up bg-[#f8f9fe] rounded-xl p-8 hover:shadow-lg transition-all duration-300">
+              <div className="mb-6">
+                <Shield className="w-14 h-14" style={{ color: "hsl(238 69% 36%)" }} />
+              </div>
+              <h3 className="text-2xl font-bold mb-4" style={{ color: "hsl(238 69% 36%)" }}>
+                Comprehensive Coverage
+              </h3>
+              <p className="text-lg leading-relaxed" style={{ color: "hsl(215 16% 47%)" }}>
+                Every order is covered against loss, damage, and porch piracy, across USPS, UPS, FedEx, DHL, and international carriers — ensuring peace of mind for your customers worldwide.
+              </p>
+            </div>
+
+            {/* Zero Merchant Involvement */}
+            <div className="fade-in-up bg-[#f8f9fe] rounded-xl p-8 hover:shadow-lg transition-all duration-300">
+              <div className="mb-6">
+                <Zap className="w-14 h-14" style={{ color: "hsl(238 69% 36%)" }} />
+              </div>
+              <h3 className="text-2xl font-bold mb-4" style={{ color: "hsl(238 69% 36%)" }}>
+                Zero Merchant Involvement
+              </h3>
+              <p className="text-lg leading-relaxed" style={{ color: "hsl(215 16% 47%)" }}>
+                Customers submit claims directly through our self-service portal. Parcelis handles resolution in 5–7 days, reducing tickets and freeing your support team.
+              </p>
+            </div>
+
+            {/* Boost Conversions and Loyalty */}
+            <div className="fade-in-up bg-[#f8f9fe] rounded-xl p-8 hover:shadow-lg transition-all duration-300">
+              <div className="mb-6">
+                <TrendingUp className="w-14 h-14" style={{ color: "hsl(238 69% 36%)" }} />
+              </div>
+              <h3 className="text-2xl font-bold mb-4" style={{ color: "hsl(238 69% 36%)" }}>
+                Boost Conversions and Loyalty
+              </h3>
+              <p className="text-lg leading-relaxed" style={{ color: "hsl(215 16% 47%)" }}>
+                When customers see 'Protected by Parcelis' at checkout, they feel secure completing their purchase — leading to higher conversion rates and repeat buyers.
+              </p>
+            </div>
+
+            {/* Fewer Refunds, Happier Customers */}
+            <div className="fade-in-up bg-[#f8f9fe] rounded-xl p-8 hover:shadow-lg transition-all duration-300">
+              <div className="mb-6">
+                <Smile className="w-14 h-14" style={{ color: "hsl(238 69% 36%)" }} />
+              </div>
+              <h3 className="text-2xl font-bold mb-4" style={{ color: "hsl(238 69% 36%)" }}>
+                Fewer Refunds, Happier Customers
+              </h3>
+              <p className="text-lg leading-relaxed" style={{ color: "hsl(215 16% 47%)" }}>
+                Eliminate time-consuming back-and-forth over missing or damaged shipments. Parcelis keeps customers satisfied and loyal, without burdening your team.
+              </p>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <Link 
+              to="/how-it-works"
+              className="btn btn-primary btn-large inline-flex items-center gap-2"
+            >
+              See How Parcelis Works
+              <ChevronRight size={20} />
+            </Link>
           </div>
         </div>
       </section>
@@ -1010,17 +702,17 @@ const HomePage = () => {
       <section className="final-cta-section">
         <div className="container mx-auto px-6 lg:px-12">
           <div className="final-cta-content">
-            <h2 className="final-cta-headline">Ready to Turn Protection Into Profit?</h2>
+            <h2 className="final-cta-headline">Ready to Protect Your Customers?</h2>
             <p className="final-cta-subheadline">
-              Join the merchants who've chosen the smarter way to protect shipments.
+              Join the merchants who've chosen the smarter way to deliver confidence with every shipment.
             </p>
 
             <div className="final-cta-buttons">
-              <a href="#calculator" className="btn btn-primary btn-large">
-                Calculate Your Profit
-              </a>
-              <Link to="/apply" className="btn btn-secondary btn-large">
-                Apply Now
+              <Link to="/apply" className="btn btn-primary btn-large">
+                Protect Your Customers Today
+              </Link>
+              <Link to="/how-it-works" className="btn btn-secondary btn-large">
+                See How It Works
               </Link>
             </div>
 
@@ -1032,7 +724,7 @@ const HomePage = () => {
                 <span className="trust-badge-text">Licensed Reinsurance Provider</span>
               </div>
               <div className="trust-item">
-                <span className="trust-badge-text">200+ Years Combined Experience</span>
+                <span className="trust-badge-text">Comprehensive Protection</span>
               </div>
             </div>
           </div>
