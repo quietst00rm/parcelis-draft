@@ -12,44 +12,40 @@ import uspsLogo from "@/assets/carriers/usps.png";
 import dhlLogo from "@/assets/carriers/dhl.png";
 import upsLogo from "@/assets/carriers/ups.png";
 import fedexLogo from "@/assets/carriers/fedex.png";
-
 const ContactPage = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     company: "",
     subject: "",
-    message: "",
+    message: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate form submission
     await new Promise(resolve => setTimeout(resolve, 1000));
-    
     toast.success("Message sent! We'll respond within 24-48 hours.");
-    setFormData({ name: "", email: "", company: "", subject: "", message: "" });
+    setFormData({
+      name: "",
+      email: "",
+      company: "",
+      subject: "",
+      message: ""
+    });
     setIsSubmitting(false);
   };
-
-  return (
-    <div className="min-h-screen">
+  return <div className="min-h-screen">
       {/* Hero Banner */}
-      <HeroBanner
-        headline="Get in Touch"
-        subheadline="Questions about PARCELIS? We're here to help."
-        primaryCTA={{
-          text: "Apply Now",
-          href: "/apply",
-        }}
-        secondaryCTA={{
-          text: "View Pricing",
-          href: "/pricing",
-        }}
-      />
+      <HeroBanner headline="Get in Touch" subheadline="Questions about PARCELIS? We're here to help." primaryCTA={{
+      text: "Apply Now",
+      href: "/apply"
+    }} secondaryCTA={{
+      text: "View Pricing",
+      href: "/pricing"
+    }} />
 
       <div className="container mx-auto px-4 py-20">
 
@@ -76,40 +72,34 @@ const ContactPage = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <Label htmlFor="name">Name *</Label>
-                <Input
-                  id="name"
-                  required
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="Your name"
-                />
+                <Input id="name" required value={formData.name} onChange={e => setFormData({
+                ...formData,
+                name: e.target.value
+              })} placeholder="Your name" />
               </div>
 
               <div>
                 <Label htmlFor="email">Email *</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="your@email.com"
-                />
+                <Input id="email" type="email" required value={formData.email} onChange={e => setFormData({
+                ...formData,
+                email: e.target.value
+              })} placeholder="your@email.com" />
               </div>
 
               <div>
                 <Label htmlFor="company">Company Name</Label>
-                <Input
-                  id="company"
-                  value={formData.company}
-                  onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  placeholder="Your company (optional)"
-                />
+                <Input id="company" value={formData.company} onChange={e => setFormData({
+                ...formData,
+                company: e.target.value
+              })} placeholder="Your company (optional)" />
               </div>
 
               <div>
                 <Label htmlFor="subject">Subject *</Label>
-                <Select value={formData.subject} onValueChange={(value) => setFormData({ ...formData, subject: value })}>
+                <Select value={formData.subject} onValueChange={value => setFormData({
+                ...formData,
+                subject: value
+              })}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a subject" />
                   </SelectTrigger>
@@ -125,14 +115,10 @@ const ContactPage = () => {
 
               <div>
                 <Label htmlFor="message">Message *</Label>
-                <Textarea
-                  id="message"
-                  required
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Tell us how we can help..."
-                  rows={6}
-                />
+                <Textarea id="message" required value={formData.message} onChange={e => setFormData({
+                ...formData,
+                message: e.target.value
+              })} placeholder="Tell us how we can help..." rows={6} />
               </div>
 
               <Button type="submit" variant="hero" className="w-full" disabled={isSubmitting}>
@@ -153,10 +139,7 @@ const ContactPage = () => {
               </Link>
             </Button>
             <Button asChild variant="outline" className="h-auto py-6 flex-col">
-              <a href="https://claims.parcelis.com" target="_blank" rel="noopener noreferrer">
-                <span className="font-semibold mb-1">File a Claim</span>
-                <span className="text-xs text-muted-foreground">Need to file a claim?</span>
-              </a>
+              
             </Button>
             <Button asChild variant="outline" className="h-auto py-6 flex-col">
               <Link to="/pricing">
@@ -178,8 +161,6 @@ const ContactPage = () => {
           </div>
         </section>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default ContactPage;
