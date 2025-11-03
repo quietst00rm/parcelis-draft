@@ -319,31 +319,22 @@ const PricingPage = () => {
                     Live
                   </span>
                 </div>
-              </div>
-            </div>
-
-            <div className="bg-card rounded-lg p-8 shadow-sm border-2 border-primary/20">
-              <h3 className="text-xl font-semibold mb-6 flex items-center gap-2">
-                <Clock className="w-6 h-6 text-primary" />
-                Launching Soon
-              </h3>
-              <div className="flex items-center gap-8 flex-wrap text-muted-foreground">
                 <div className="flex items-center gap-3">
                   <span className="font-medium">WooCommerce</span>
-                  <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-semibold">
-                    Coming Soon
+                  <span className="px-3 py-1 bg-success text-success-foreground rounded-full text-sm font-semibold">
+                    Live
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="font-medium">BigCommerce</span>
-                  <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-semibold">
-                    Coming Soon
+                  <span className="px-3 py-1 bg-success text-success-foreground rounded-full text-sm font-semibold">
+                    Live
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="font-medium">Magento</span>
-                  <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-semibold">
-                    Coming Soon
+                  <span className="px-3 py-1 bg-success text-success-foreground rounded-full text-sm font-semibold">
+                    Live
                   </span>
                 </div>
               </div>
