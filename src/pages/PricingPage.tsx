@@ -27,9 +27,6 @@ const PricingPage = () => {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
               Simple Pricing. Proven Value.
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-8">
-              Affordable protection that pays for itself in customer trust and operational efficiency.
-            </p>
             <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-3xl mx-auto mb-10">
               Coverage starts at $2.50 per shipment for packages valued up to $200. That small investment reduces refund losses, improves customer satisfaction scores, and cuts down costly support time. With Parcelis, every claim is handled quickly and fairly — keeping customers confident and your operations smooth.
             </p>
@@ -49,6 +46,9 @@ const PricingPage = () => {
       {/* Calculator Section */}
       <section className="py-16 md:py-20 bg-background">
         <div className="container mx-auto px-4">
+          <p className="text-xl md:text-2xl text-muted-foreground text-center mb-8 max-w-3xl mx-auto">
+            Affordable protection that pays for itself in customer trust and operational efficiency.
+          </p>
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Transparent Pricing Calculator
