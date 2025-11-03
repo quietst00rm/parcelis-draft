@@ -543,9 +543,7 @@ const HomePage = () => {
               </h3>
               <p className="text-lg" style={{
               color: "hsl(215 16% 47%)"
-            }}>
-                Connect via Shopify app or platform integration
-              </p>
+            }}>Connect via Shopify app or other platform integrations</p>
             </div>
             <div className="text-center fade-in-up">
               <div className="w-20 h-20 rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6 text-white" style={{
