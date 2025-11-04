@@ -90,9 +90,9 @@ const Navigation = () => {
               href="https://claims.myparcelis.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-outline-primary h-12 px-6 text-base inline-flex items-center gap-2"
+              className="h-12 px-6 text-base inline-flex items-center gap-2 text-foreground border-2 border-input rounded-lg hover:bg-accent transition-colors"
             >
-              <FileText size={16} />
+              <FileText size={16} className="text-primary" />
               File a Claim
             </a>
             <Link
