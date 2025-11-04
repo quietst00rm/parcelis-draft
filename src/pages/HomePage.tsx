@@ -228,7 +228,7 @@ const HomePage = () => {
               {/* WooCommerce */}
               <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 hover:bg-white/15 hover:-translate-y-1 transition-all duration-300">
                 <div className="h-20 flex items-center justify-center mb-4">
-                  <div className="text-4xl">🛒</div>
+                  <img src="https://woocommerce.com/wp-content/themes/woo/images/logo-woocommerce-white.svg" alt="WooCommerce" className="max-h-16 object-contain" />
                 </div>
                 <div className="text-xl font-bold text-white text-center mb-2">WooCommerce</div>
                 <div className="flex items-center justify-center gap-2 mb-3">
@@ -247,7 +247,11 @@ const HomePage = () => {
               {/* BigCommerce */}
               <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 hover:bg-white/15 hover:-translate-y-1 transition-all duration-300">
                 <div className="h-20 flex items-center justify-center mb-4">
-                  <div className="text-4xl">🏪</div>
+                  <svg className="max-h-16 w-auto" viewBox="0 0 180 50" fill="white" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="15" cy="25" r="12" fill="white" opacity="0.9"/>
+                    <path d="M15 18 L20 22 L15 32 L10 22 Z" fill="white" opacity="0.3"/>
+                    <text x="35" y="32" fontFamily="Arial, sans-serif" fontSize="22" fontWeight="600" fill="white">BigCommerce</text>
+                  </svg>
                 </div>
                 <div className="text-xl font-bold text-white text-center mb-2">BigCommerce</div>
                 <div className="flex items-center justify-center gap-2 mb-3">
@@ -266,7 +270,14 @@ const HomePage = () => {
               {/* Magento */}
               <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 hover:bg-white/15 hover:-translate-y-1 transition-all duration-300">
                 <div className="h-20 flex items-center justify-center mb-4">
-                  <div className="text-4xl">🔧</div>
+                  <svg className="max-h-16 w-auto" viewBox="0 0 140 50" fill="white" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(5, 5)">
+                      <path d="M20 0L25 5V35L20 40L15 35V5L20 0Z" fill="white" opacity="0.9"/>
+                      <path d="M20 5L23 8V32L20 35L17 32V8L20 5Z" fill="white" opacity="0.4"/>
+                      <rect x="18.5" y="15" width="3" height="15" fill="white" opacity="0.8"/>
+                    </g>
+                    <text x="50" y="32" fontFamily="Arial, sans-serif" fontSize="22" fontWeight="600" fill="white">Magento</text>
+                  </svg>
                 </div>
                 <div className="text-xl font-bold text-white text-center mb-2">Magento</div>
                 <div className="flex items-center justify-center gap-2 mb-3">
