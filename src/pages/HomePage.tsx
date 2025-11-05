@@ -206,12 +206,12 @@ const HomePage = () => {
                 <div className="text-sm text-white/70 text-center">One-click app</div>
               </div>
 
-              {/* 29next */}
+              {/* NEXT Commerce */}
               <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20 hover:bg-white/15 hover:-translate-y-1 transition-all duration-300">
                 <div className="h-20 flex items-center justify-center mb-4">
-                  <img src={twentyNineNextLogo} alt="29next" className="max-h-16 object-contain" />
+                  <img src={twentyNineNextLogo} alt="NEXT Commerce" className="max-h-16 object-contain" />
                 </div>
-                <div className="text-xl font-bold text-white text-center mb-2">29next</div>
+                <div className="text-xl font-bold text-white text-center mb-2">NEXT Commerce</div>
                 <div className="flex items-center justify-center gap-2 mb-3">
                   <div className="w-2 h-2 rounded-full animate-pulse" style={{
                   background: "hsl(163 100% 43%)"

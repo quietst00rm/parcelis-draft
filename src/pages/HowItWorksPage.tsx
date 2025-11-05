@@ -103,10 +103,10 @@ const HowItWorksPage = () => {
               </ul>
             </div>
 
-            {/* 29next */}
+            {/* NEXT Commerce */}
             <div className="bg-card rounded-xl p-8 border border-border shadow-sm relative">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-2xl font-bold">29next</h3>
+                <h3 className="text-2xl font-bold">NEXT Commerce</h3>
                 <span className="px-3 py-1 bg-success text-success-foreground rounded-full text-xs font-semibold">
                   Live
                 </span>
@@ -114,7 +114,7 @@ const HowItWorksPage = () => {
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-start gap-2">
                   <Zap className="text-primary flex-shrink-0 mt-1" size={18} />
-                  <span>Seamless integration with 29next checkout</span>
+                  <span>Seamless integration with NEXT Commerce checkout</span>
                 </li>
               </ul>
             </div>

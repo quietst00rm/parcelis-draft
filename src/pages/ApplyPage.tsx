@@ -168,7 +168,7 @@ const ApplyPage = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="shopify">Shopify</SelectItem>
-                      <SelectItem value="29next">29next</SelectItem>
+                      <SelectItem value="29next">NEXT Commerce</SelectItem>
                       <SelectItem value="woocommerce">WooCommerce</SelectItem>
                       <SelectItem value="bigcommerce">BigCommerce</SelectItem>
                       <SelectItem value="magento">Magento</SelectItem>

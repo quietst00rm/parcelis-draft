@@ -295,7 +295,7 @@ const PricingPage = () => {
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <img src={twentyNineLogo} alt="29next" className="h-10 object-contain" />
+                  <img src={twentyNineLogo} alt="NEXT Commerce" className="h-10 object-contain" />
                   <span className="px-3 py-1 bg-success text-success-foreground rounded-full text-sm font-semibold">
                     Live
                   </span>
