@@ -58,14 +58,25 @@ const AffiliatePage = () => {
   });
 
   const onSubmit = async (data: FormValues) => {
-    // Placeholder for email functionality
-    console.log("Form submitted:", data);
-    
-    // TODO: Implement email sending to isaac@legacyseller.com
-    // This will be set up with Lovable Cloud later
-    
-    // Show success message
-    setIsSubmitted(true);
+    try {
+      const response = await fetch('/api/send-affiliate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit application');
+      }
+
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      // You might want to show an error toast here
+      alert('Failed to submit application. Please try again or contact us directly.');
+    }
   };
 
   return (
