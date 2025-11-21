@@ -31,7 +31,7 @@ export default async function handler(
 
     const emailResponse = await resend.emails.send({
       from: 'PARCELIS Affiliates <onboarding@resend.dev>',
-      to: ['isaac@legacyseller.com'],
+      to: ['YOUR_EMAIL_HERE@example.com'], // Replace with your email for testing
       replyTo: email,
       subject: `New Affiliate Application: ${company}`,
       html: `
