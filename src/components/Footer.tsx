@@ -29,6 +29,11 @@ const Footer = () => {
                   Pricing
                 </Link>
               </li>
+              <li>
+                <Link to="/risk-calculator" className="text-base text-white/70 hover:text-white transition-colors inline-block" onClick={() => window.scrollTo(0, 0)}>
+                  Risk Calculator
+                </Link>
+              </li>
             </ul>
           </div>
           
