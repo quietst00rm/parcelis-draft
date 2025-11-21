@@ -59,7 +59,7 @@ const AffiliatePage = () => {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      const response = await fetch('/api/send-affiliate', {
+      const response = await fetch('https://formspree.io/f/mjkzkake', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -74,7 +74,6 @@ const AffiliatePage = () => {
       setIsSubmitted(true);
     } catch (error) {
       console.error('Error submitting application:', error);
-      // You might want to show an error toast here
       alert('Failed to submit application. Please try again or contact us directly.');
     }
   };
