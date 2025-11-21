@@ -20,7 +20,7 @@ export default async function handler(
 
     const emailResponse = await resend.emails.send({
       from: 'PARCELIS Contact <onboarding@resend.dev>',
-      to: ['support@myparcelis.com'],
+      to: ['YOUR_EMAIL_HERE@example.com'], // Replace with your email for testing
       replyTo: email,
       subject: `Contact Form: ${subject}`,
       html: `
