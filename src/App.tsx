@@ -12,6 +12,7 @@ import ContactPage from "./pages/ContactPage";
 import ApplyPage from "./pages/ApplyPage";
 import FAQPage from "./pages/FAQPage";
 import AffiliatePage from "./pages/AffiliatePage";
+import RiskCalculatorPage from "./pages/RiskCalculatorPage";
 import PrivacyPage from "./pages/PrivacyPage";
 import TermsPage from "./pages/TermsPage";
 import NotFound from "./pages/NotFound";
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/apply" element={<Layout><ApplyPage /></Layout>} />
           <Route path="/faq" element={<Layout><FAQPage /></Layout>} />
           <Route path="/affiliate-program" element={<Layout><AffiliatePage /></Layout>} />
+          <Route path="/risk-calculator" element={<Layout><RiskCalculatorPage /></Layout>} />
           <Route path="/privacy" element={<Layout><PrivacyPage /></Layout>} />
           <Route path="/terms" element={<Layout><TermsPage /></Layout>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
