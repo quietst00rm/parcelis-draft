@@ -6,7 +6,9 @@ const Index = () => {
   return (
     <div>
       <Navigation />
-      <HomePage />
+      <div className="pt-20 lg:pt-24">
+        <HomePage />
+      </div>
       <Footer />
     </div>
   );
