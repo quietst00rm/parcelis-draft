@@ -18,7 +18,7 @@ const ContactPage = () => {
     email: "",
     company: "",
     subject: "",
-    message: ""
+    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleSubmit = async (e: React.FormEvent) => {
@@ -26,16 +26,16 @@ const ContactPage = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://formspree.io/f/[YOUR_NEW_FORM_ID]', {
-        method: 'POST',
+      const response = await fetch("https://formspree.io/f/xkgegeav]", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to send message');
+        throw new Error("Failed to send message");
       }
 
       toast.success("Message sent! We'll respond within 24-48 hours.");
@@ -44,27 +44,32 @@ const ContactPage = () => {
         email: "",
         company: "",
         subject: "",
-        message: ""
+        message: "",
       });
     } catch (error) {
-      console.error('Error sending message:', error);
+      console.error("Error sending message:", error);
       toast.error("Failed to send message. Please try again or email us directly at support@myparcelis.com");
     } finally {
       setIsSubmitting(false);
     }
   };
-  return <div className="min-h-screen">
+  return (
+    <div className="min-h-screen">
       {/* Hero Banner */}
-      <HeroBanner headline="Get in Touch" subheadline="Questions about PARCELIS? We're here to help." primaryCTA={{
-      text: "Apply Now",
-      href: "/apply"
-    }} secondaryCTA={{
-      text: "View Pricing",
-      href: "/pricing"
-    }} />
+      <HeroBanner
+        headline="Get in Touch"
+        subheadline="Questions about PARCELIS? We're here to help."
+        primaryCTA={{
+          text: "Apply Now",
+          href: "/apply",
+        }}
+        secondaryCTA={{
+          text: "View Pricing",
+          href: "/pricing",
+        }}
+      />
 
       <div className="container mx-auto px-4 py-20">
-
         <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto mb-16">
           {/* Contact Information */}
           <div>
@@ -88,34 +93,63 @@ const ContactPage = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <Label htmlFor="name">Name *</Label>
-                <Input id="name" required value={formData.name} onChange={e => setFormData({
-                ...formData,
-                name: e.target.value
-              })} placeholder="Your name" />
+                <Input
+                  id="name"
+                  required
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      name: e.target.value,
+                    })
+                  }
+                  placeholder="Your name"
+                />
               </div>
 
               <div>
                 <Label htmlFor="email">Email *</Label>
-                <Input id="email" type="email" required value={formData.email} onChange={e => setFormData({
-                ...formData,
-                email: e.target.value
-              })} placeholder="your@email.com" />
+                <Input
+                  id="email"
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      email: e.target.value,
+                    })
+                  }
+                  placeholder="your@email.com"
+                />
               </div>
 
               <div>
                 <Label htmlFor="company">Company Name</Label>
-                <Input id="company" value={formData.company} onChange={e => setFormData({
-                ...formData,
-                company: e.target.value
-              })} placeholder="Your company (optional)" />
+                <Input
+                  id="company"
+                  value={formData.company}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      company: e.target.value,
+                    })
+                  }
+                  placeholder="Your company (optional)"
+                />
               </div>
 
               <div>
                 <Label htmlFor="subject">Subject *</Label>
-                <Select value={formData.subject} onValueChange={value => setFormData({
-                ...formData,
-                subject: value
-              })}>
+                <Select
+                  value={formData.subject}
+                  onValueChange={(value) =>
+                    setFormData({
+                      ...formData,
+                      subject: value,
+                    })
+                  }
+                >
                   <SelectTrigger>
                     <SelectValue placeholder="Select a subject" />
                   </SelectTrigger>
@@ -131,10 +165,19 @@ const ContactPage = () => {
 
               <div>
                 <Label htmlFor="message">Message *</Label>
-                <Textarea id="message" required value={formData.message} onChange={e => setFormData({
-                ...formData,
-                message: e.target.value
-              })} placeholder="Tell us how we can help..." rows={6} />
+                <Textarea
+                  id="message"
+                  required
+                  value={formData.message}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      message: e.target.value,
+                    })
+                  }
+                  placeholder="Tell us how we can help..."
+                  rows={6}
+                />
               </div>
 
               <Button type="submit" variant="hero" className="w-full" disabled={isSubmitting}>
@@ -154,9 +197,7 @@ const ContactPage = () => {
                 <span className="text-xs text-muted-foreground">Ready to get started?</span>
               </Link>
             </Button>
-            <Button asChild variant="outline" className="h-auto py-6 flex-col">
-              
-            </Button>
+            <Button asChild variant="outline" className="h-auto py-6 flex-col"></Button>
             <Button asChild variant="outline" className="h-auto py-6 flex-col">
               <Link to="/pricing">
                 <span className="font-semibold mb-1">View Pricing</span>
@@ -177,6 +218,7 @@ const ContactPage = () => {
           </div>
         </section>
       </div>
-    </div>;
+    </div>
+  );
 };
 export default ContactPage;
